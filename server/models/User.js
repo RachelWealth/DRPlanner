@@ -14,16 +14,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require:true,
     },
-    daily:{
-        type:[number],
-    },
-    monthly:{
-        type:[number],
-    },
-    yearly:{
-        type:[number],
-    },
+    // daily:{
+    //     type:[Number],
+    // },
+    // monthly:{
+    //     type:[Number],
+    // },
+    // yearly:{
+    //     type:[number],
+    // },
 },
 {timestamps:true});
 
-export default mongoose.model("user",UserSchema);
+export default mongoose.model("User",UserSchema);
