@@ -6,7 +6,7 @@ import dailyPlanRouters from "./routes/dailyPlan.js";
 import monthlyPlanRouters from "./routes/monthlyPlan.js";
 import yearlyPlanRouters from "./routes/yearlyPlan.js";
 import authRouters from "./routes/auth.js";
-
+import cookieParser from 'cookie-parser';
 
 const app = express();
 dotenv.config();
@@ -22,6 +22,8 @@ const connect = ()=>{
         throw err;
     })
 }
+
+app.use(cookieParser());
 app.use(express.json()); // Allowed come in json data
 app.use("/api/users",userRouters)
 app.use("/api/dailyPlan",dailyPlanRouters)

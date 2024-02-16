@@ -8,7 +8,8 @@ const DailyPlanSchema = new mongoose.Schema({
     },
     repeatType:{
         type:Number,
-        requird:true},
+        requird:true,
+    },
     startDate:{
         type:Number,
         requird:true
