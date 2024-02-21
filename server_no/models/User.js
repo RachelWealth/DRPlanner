@@ -14,15 +14,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require:true,
     },
-    // daily:{
-    //     type:[Number],
-    // },
-    // monthly:{
-    //     type:[Number],
-    // },
-    // yearly:{
-    //     type:[number],
-    // },
+    daily:{
+        type:[String],
+        default: [],
+    },
+    monthly:{
+        type:[String],
+        default: [],
+    },
+    yearly:{
+        type:[String],
+        default: [],
+    },
 },
 {timestamps:true});
 
