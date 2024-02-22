@@ -1,0 +1,11 @@
+@tailwind base;
+
+@font-face {
+    font-family: 'Fredoka';
+    font-style: normal;
+    font-weight: 300 700;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url(../fonts/X7n64b87HvSqjb_WIi2yDCRwoQ_k7367_DWs89XyHw.woff2) ;
+    unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}

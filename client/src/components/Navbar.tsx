@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
 import Feedback from "./Feedback";
-import Popup from 'reactjs-popup';
-
+import Popup from "reactjs-popup";
+import { HiMenuAlt1 } from "react-icons/hi";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isFeedbackOpen,setIsFeedbackOpen] = useState(false)
-  
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  console.log(process.env.NODE_ENV)
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
       <nav
@@ -18,7 +18,7 @@ const Navbar = () => {
       >
         <div
           className={
-            "relative w-full hidden lg:inline-flex lg:w-[600px] h-10 text-base text-primeColor border-[1px] border-black items-center gap-2 justify-between px-6 rounded-md" 
+            "relative w-full hidden lg:inline-flex lg:w-[600px] h-10 text-base text-primeColor border-[1px] border-black items-center gap-2 justify-between px-6 rounded-md"
           }
         >
           <input
@@ -41,45 +41,46 @@ const Navbar = () => {
             </div>
           )}
         </div>
-<div className="lg:inline-flex justify-end  absolute hidden lg:right-4   gap-2 h-10 ">
-<div>
-         
-
-          <Popup trigger=
-                { <button
+        <div className="lg:inline-flex justify-end  absolute hidden lg:right-4   gap-2 h-10 ">
+          <div>
+            <Popup
+              trigger={
+                <button
                   className="setting bg-black text-white py-2 px-4 rounded-md"
                   type="button"
-                  onClick={()=>setIsFeedbackOpen(!isFeedbackOpen)}
+                  onClick={() => setIsFeedbackOpen(!isFeedbackOpen)}
                 >
                   {/* {
                     !isFeedbackOpen && <Feedback />
                   } */}
                   Feedback
-                </button>} 
-                modal nested>
-                {
-                   < Feedback/>
-                }
+                </button>
+              }
+              modal
+              nested
+            >
+              {<Feedback />}
             </Popup>
-        </div>
-        <div>
-          <button className="feedback text-black py-2 px-4 rounded-md" type="button">
-            Setting
-          </button>
+          </div>
+          <div>
+            <button
+              className="feedback text-black py-2 px-4 rounded-md"
+              type="button"
+            >
+              Setting
+            </button>
+          </div>
 
-          
+          <div>
+            <button
+              type="button"
+              className="profile bg-black text-white p-2 rounded-full"
+            >
+              Profile
+            </button>
+          </div>
         </div>
-
-        <div>
-          <button
-            type="button"
-            className="profile bg-black text-white p-2 rounded-full"
-          >
-            Profile
-          </button>
-        </div>
-</div>
-        
+        <HiMenuAlt1 className="inline-flex md:hidden cursor-pointer w-8 h-6 "/>
       </nav>
     </div>
   );
