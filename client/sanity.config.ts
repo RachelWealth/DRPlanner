@@ -10,6 +10,7 @@ import {structureTool} from 'sanity/structure'
 import {apiVersion, dataset, projectId} from './sanity/env'
 // Import necessary modules
 import { schema } from './src/schema/schema'
+import StudioHeader from './src/components/StudioHeader'
 
 
 // Define the configuration
@@ -25,5 +26,10 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  studio:{
+    components:{
+      navbar:StudioHeader,
+    }
+  }
 });
 

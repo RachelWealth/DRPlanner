@@ -1,9 +1,10 @@
-import Dashboard from '@/src/components/dashbooard'
+
+import PlansDashBoard from '@/src/components/Plans'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <div><Dashboard /></div>
+    <PlansDashBoard></PlansDashBoard>
     
   )
 }

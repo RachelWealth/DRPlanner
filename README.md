@@ -13,3 +13,6 @@ Frontend:
 - React
 - Next.js
 - Redux
+
+## ToDo
+Sanity API 1:30:10
