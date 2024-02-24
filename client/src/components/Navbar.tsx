@@ -11,7 +11,6 @@ import Link from "next/link";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  console.log(process.env.NODE_ENV);
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
       <nav
