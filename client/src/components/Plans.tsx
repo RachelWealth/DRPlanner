@@ -7,7 +7,7 @@ const PlansDashBoard = () => {
   return (
     <div className='flex justify-center items-center '> 
 
-<div className='p-2 m-2 flex items-center justify-center h-[600px] w-[800px] border-gray-600 border-2'>
+<div className='p-2 m-2 flex items-center bg-green-100 justify-center h-[600px] w-[800px] rounded-lg'>
       <DailyPlans className="flex-1 p-2 m-1 h-full justify-start items-center border-2 border-gray-500" />
       <div className="flex-1 m-1 h-full justify-center items-center border-2 border-gray-500" >
       <MonthlyPlans className="flex h-[50%] p-2  justify-start border-2 border-gray-500" ></MonthlyPlans>

@@ -41,6 +41,7 @@ const Login = () => {
       // Handle the response here (e.g., check if login was successful)
       console.log("Server Response:", response.data);
 
+      
       // Clear form and error message
       setemail("");
       setPassword("");

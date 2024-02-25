@@ -9,6 +9,7 @@ const ProfileDropdown: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    console.log("click logout")
     dispatch(logout());
   };
   const handlChangeAccount = (data: any) => {

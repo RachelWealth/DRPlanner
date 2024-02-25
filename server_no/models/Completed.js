@@ -23,11 +23,11 @@ const DailyPlanSchema = new mongoose.Schema({
         required:true,
     },
     comment:{
-        type:Number,
+        type:String,
         requird:true,
     },
-    importance:{
-        type:Number,
+    priority:{
+        type:String,
         requird:true,
     }
 },

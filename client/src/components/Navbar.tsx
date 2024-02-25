@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
 import Feedback from "./Feedback";
@@ -15,7 +15,9 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const {curUser} = useSelector((state: any) =>state.user)
-
+  useEffect(()=>{
+    console.log("user changed, update navbar")
+  },[curUser])
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
       <nav

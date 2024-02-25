@@ -6,6 +6,7 @@ Backend:
 - Node.js
 - Express
 - MongoDB
+- JWT
 
 Frontend:
 - TypeScript
