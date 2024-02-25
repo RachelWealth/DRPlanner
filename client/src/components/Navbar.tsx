@@ -9,9 +9,13 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import mylogo from "../../public/drlogo.jpg";
 import Link from "next/link";
 import Login from "./Login";
+import { useSelector } from "react-redux";
+import Profile from "./Profile";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const {curUser} = useSelector((state: any) =>state.user)
+
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
       <nav
@@ -58,6 +62,7 @@ const Navbar = () => {
           <div>
             <Popup
               trigger={
+               
                 <button
                   className="setting bg-black text-white py-2 px-4 rounded-md"
                   type="button"
@@ -85,20 +90,7 @@ const Navbar = () => {
           </div>
 
           <div>
-          <Popup
-              trigger={
-                <button
-              type="button"
-              className="profile bg-black text-white p-2 rounded-full"
-            >
-              Profile
-            </button>
-              }
-              modal
-              nested
-            >
-              {<Login />}
-            </Popup>
+            {curUser ? <Profile /> : <Login />}
             
           </div>
         </div>

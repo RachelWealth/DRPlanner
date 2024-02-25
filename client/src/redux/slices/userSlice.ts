@@ -1,33 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Async thunk for fetching tasks
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    try {
-      const response = await fetch('/api/dailyPlan/');
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      throw error; // Rethrow the error to be caught by the async thunk
-    }
-  });
+
   
 const initialState={
-    dailyData:[]
+    curUser:null,
+    loading:false,
+    error:false,
 }
 
-export const dailySlice = createSlice({
-    name:'daily',
+export const userSlice = createSlice({
+    name:'user',
     initialState,
     reducers:{
-        addDaily:(state,action)=>{
-            state.dailyData.push(action.payload)
-
-            //TO DO
-            // connect with backend server
-        }
+        loginStart:(state)=>{
+            state.loading = true
+        },
+        loginSuccess:(state,action)=>{
+            state.loading=true
+            state.curUser = action.payload
+        },
+        loginFailed:(state)=>{
+            state.loading=false;
+            state.error=true;
+        },
+        logout:()=>{
+            return initialState
+        },
+        changeAccount:(state,action)=>{
+            //TODO
+        },
     }
 })
 
-export const {addDaily} = dailySlice.actions;
-export default dailySlice.reducer;
+export const {loginStart,loginSuccess,loginFailed,logout,changeAccount} = userSlice.actions;
+export default userSlice.reducer;

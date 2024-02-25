@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import Container from './Container'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addDaily } from '../redux/slices/dailySlice';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
@@ -13,16 +13,22 @@ const DailyPlans = ({className}:Props) => {
   const plan = {
     content:"new plan",
   }
+  const {curUser} = useSelector((state: any) =>state.user)
+  const [loginUser,setLoginUser] = useState(null)
   const [plans,setPlans] = useState([])
   useEffect(()=>{
     const fetchPlans = async()=>{
       console.log("fetch daily plans")
-      const res = await axios.get(`http://localhost:8800/api/dailyPlan/65d53c7db9bd7a03b030419d`)
+      if(curUser){
+        const res = await axios.get(`http://localhost:8800/api/dailyPlan/`+curUser._id)
       setPlans(res.data)
       console.log(res)
+      }
+
+      
     }
     fetchPlans()
-  },[])
+  },[curUser])
   return (
     <div className={`${className}`}>
         <h3>Daily</h3>

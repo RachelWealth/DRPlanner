@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+ 
 // Async thunk for fetching tasks
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
     try {
@@ -26,6 +27,7 @@ export const dailySlice = createSlice({
             //TO DO
             // connect with backend server
         }
+
     }
 })
 
