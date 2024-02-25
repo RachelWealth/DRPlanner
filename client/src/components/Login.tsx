@@ -9,6 +9,8 @@ import {
   loginSuccess,
 } from "../redux/slices/userSlice";
 import Popup from "reactjs-popup";
+import {auth,provider} from "../firebase"
+import {signInWithPopup} from "firebase/auth"
 
 const Login = () => {
   const [email, setemail] = useState("");
@@ -60,6 +62,30 @@ const Login = () => {
       }
     }
   };
+  function signWithGoogle(): void {
+    signInWithPopup(auth,provider) .then((result) => {
+      dispatch(loginStart())
+      axios.post("http://localhost:8800/api/auth/google",{
+        name:result.user.displayName,
+        email:result.user.email,
+        img:result.user.photoURL,
+      }).then((res)=>{
+        dispatch(loginSuccess(res.data))
+      })
+      console.log(result)
+    })
+    .catch((error) => {
+      dispatch(loginFailed())
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      console.log(error)
+    });
+  }
+
   return (
     isPopupOpen && (
       <Popup 
@@ -129,6 +155,11 @@ const Login = () => {
                   Login
                 </button>
               </div>
+              <h3  className="flex items-center justify-center">or</h3>
+              <button 
+              className="border-gary-400 items-center justify-center hover:bg-gray-200 text-black text-sm py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="button" 
+                  onClick={signWithGoogle}>Signin in with Google</button>
             </form>
           </div>
         </div>

@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
     },
     pw:{
         type: String,
-        require:true,
     },
     daily:{
         type:[String],
@@ -26,6 +25,10 @@ const UserSchema = new mongoose.Schema({
         type:[String],
         default: [],
     },
+    fromGogle:{
+        type: String,
+        default:false,
+    }
 },
 {timestamps:true});
 

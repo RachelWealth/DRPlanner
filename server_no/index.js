@@ -23,15 +23,21 @@ const connect = ()=>{
         throw err;
     })
 }
+import cors from 'cors';
 
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Specify the exact origin of your frontend
+  credentials: true,
+}));
 
 // CORS on ExpressJS
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Content-Type", "application/json");
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.header("Content-Type", "application/json");
+//     next();
+// });
 
 app.use(cookieParser());
 app.use(express.json()); // Allowed come in json data

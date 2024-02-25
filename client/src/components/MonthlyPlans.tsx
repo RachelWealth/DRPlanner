@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Container from './Container'
 import { useDispatch } from 'react-redux'
-import { addDaily } from '../redux/slices/dailySlice';
+import { addDailyStart,addDailySuccess,addDailyFailed } from '../redux/slices/dailySlice';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 interface Props{

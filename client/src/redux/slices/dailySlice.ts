@@ -14,22 +14,33 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
   });
   
 const initialState={
-    dailyData:[]
+    newDailyPlan:"",
+    error:false,
+    loading:false,
+    allDailyData:[]
 }
 
 export const dailySlice = createSlice({
     name:'daily',
     initialState,
     reducers:{
-        addDaily:(state,action)=>{
-            state.dailyData.push(action.payload)
+        addDailyStart:(state)=>{
+state.loading=true
+        },
+        addDailySuccess:(state,action)=>{
+          state.loading=false
+            state.allDailyData.push(action.payload)
 
             //TO DO
             // connect with backend server
+        },
+        addDailyFailed:(state)=>{
+          state.loading=false
+          state.error=true
         }
 
     }
 })
 
-export const {addDaily} = dailySlice.actions;
+export const {addDailyStart,addDailySuccess,addDailyFailed} = dailySlice.actions;
 export default dailySlice.reducer;
