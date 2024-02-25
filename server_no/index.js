@@ -8,6 +8,7 @@ import yearlyPlanRouters from "./routes/yearlyPlan.js";
 import authRouters from "./routes/auth.js";
 import cookieParser from 'cookie-parser';
 
+
 const app = express();
 dotenv.config();
 
@@ -22,6 +23,15 @@ const connect = ()=>{
         throw err;
     })
 }
+
+
+// CORS on ExpressJS
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Content-Type", "application/json");
+    next();
+});
 
 app.use(cookieParser());
 app.use(express.json()); // Allowed come in json data
@@ -41,6 +51,7 @@ app.use((err,req,res,next)=>{
     })
 
 })
+
 
 app.listen(8800,()=>{
     connect();

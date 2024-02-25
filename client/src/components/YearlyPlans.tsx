@@ -8,28 +8,22 @@ import axios from 'axios';
 interface Props{
   className:String;
 }
-const DailyPlans = ({className}:Props) => {
+const YearlyPlans = ({className}:Props) => {
   const dispatch = useDispatch()
   const plan = {
     content:"new plan",
   }
+
   const [plans,setPlans] = useState([])
   useEffect(()=>{
     const fetchPlans = async()=>{
-      console.log("fetch daily plans")
-      const res = await axios.get(`http://localhost:8800/api/dailyPlan/65d53c7db9bd7a03b030419d`)
-      setPlans(res.data)
-      console.log(res)
+      const res = axios.get("/dailyPlan/65d53c7db9bd7a03b030419d")
     }
-    fetchPlans()
   },[])
   return (
     <div className={`${className}`}>
-        <h3>Daily</h3>
+        <h3>Yearly</h3>
         <Container>
-          {plans.map(plan=>(
-            <p>plan</p>
-          ))}
             <div className='border-black border-[5px] w-5 h-5 m-5'></div>
         <button 
         type="button" 
@@ -66,4 +60,4 @@ const DailyPlans = ({className}:Props) => {
   )
 }
 
-export default DailyPlans
+export default YearlyPlans

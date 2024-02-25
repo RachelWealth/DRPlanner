@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const DailyPlanSchema = new mongoose.Schema({
     repeatType:{
         type:Number,
-        requird:true},
+        requird:true
+    },
     startDate:{
         type:Date,
         requird:true

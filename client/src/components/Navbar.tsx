@@ -8,6 +8,7 @@ import Image from "next/image";
 import { HiMenuAlt1 } from "react-icons/hi";
 import mylogo from "../../public/drlogo.jpg";
 import Link from "next/link";
+import Login from "./Login";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
@@ -84,12 +85,21 @@ const Navbar = () => {
           </div>
 
           <div>
-            <button
+          <Popup
+              trigger={
+                <button
               type="button"
               className="profile bg-black text-white p-2 rounded-full"
             >
               Profile
             </button>
+              }
+              modal
+              nested
+            >
+              {<Login />}
+            </Popup>
+            
           </div>
         </div>
         <HiMenuAlt1 className="inline-flex md:hidden cursor-pointer w-8 h-6 " />

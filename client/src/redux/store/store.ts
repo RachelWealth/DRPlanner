@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dailyReducer from "./dailySlice";
+import dailyReducer from "../slices/dailySlice";
 export const store = configureStore({
   reducer: {
     daily:dailyReducer,

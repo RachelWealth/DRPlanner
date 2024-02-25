@@ -1,14 +1,13 @@
-import { response } from "express"
 import { createError } from "../error.js"
 import DailyPlan from "../models/DailyPlan.js"
 import axios from "axios"
+import User from "../models/user.js";
 
 export const createDailyPlan = async(req,res,next)=>{
     try {
         const dailyplan = new DailyPlan({...req.body})
         await dailyplan.save()
-        console.log(dailyplan,res)
-        const planID = dailyplan.id
+        const planID = dailyplan._id
         await axios.put(`http://localhost:8800/api/users/daily/${req.params.userID}/${planID}`,{
             userID:req.params.userID,
             id:planID
@@ -19,8 +18,26 @@ export const createDailyPlan = async(req,res,next)=>{
     }
 }
 
+export const getDaiyPlans = async(req,res,next)=>{
+    try {
+        console.log(req)
+        const user = await User.findById(req.params.userID)
+        console.log(user,req.param.id)
+        if(!user){
+            return res.status(404).json(createError("User not found"))
+        }
+        const allPlansID = await user.daily;
+        const dailyPlans = await DailyPlan.find({_id:{$in:allPlansID}})
+       
+        res.status(200).json(dailyPlans)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export const updateDailyPlan =async(req,res,next)=>{
-    if(req.param.id===req.dailyPlan.id){
+    if(req.params.id===req.dailyPlan.id){
         try {
             const updatedPlan = await DailyPlan.findByIdAndUpdate({
                 $set:req.body
