@@ -60,14 +60,14 @@ const MonthlyPlans = ({ className }: Props) => {
                 key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <MonthlyItem type={"monthly"} data={plan} />
+                <MonthlyItem data={plan} />
               </li>
             ))}
         </ul>
 
-        <div id="addNewMonthly" className="overflow-hidden bg-white  rounded-md shadow-md mt-auto p-1">
+        <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-4">
         
-        <MonthlyItem  type={"monthly"}/>
+        <MonthlyItem />
 
         </div>
       </Container>

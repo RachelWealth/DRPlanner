@@ -1,7 +1,7 @@
 import React from 'react';
 interface Props{
     progress:number,
-    children?: React.ReactNode;
+    children: React.ReactNode;
   className?: string;
 }
 const ProgressBar=({progress}:Props)=> {
