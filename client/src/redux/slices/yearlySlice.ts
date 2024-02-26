@@ -16,8 +16,8 @@ const initialState: YearlyState = {
   firstFetchYearlyPlans: true,
 };
 
-export const YearlySlice = createSlice({
-  name: "Yearly",
+export const yearlySlice = createSlice({
+  name: "yearly",
   initialState,
   reducers: {
     initialYearly:(state,action)=>{
@@ -55,5 +55,5 @@ export const {
   updateToServerSuccess,
   updateToServerFailed,
   initialYearly,
-} = YearlySlice.actions;
-export default YearlySlice.reducer;
+} = yearlySlice.actions;
+export default yearlySlice.reducer;

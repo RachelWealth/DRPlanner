@@ -1,5 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import dailyReducer from "../slices/dailySlice";
+import monthlyReducer from "../slices/monthlySlice";
+import yearlyReducer from "../slices/yearlySlice";
 import userReducer from "../slices/userSlice";
 import {
   persistStore,
@@ -19,6 +21,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   daily: dailyReducer,
+  monthly:monthlyReducer,
+  yearly:yearlyReducer,
   user: userReducer,
 });
 

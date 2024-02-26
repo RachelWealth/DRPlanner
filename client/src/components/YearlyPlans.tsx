@@ -50,7 +50,7 @@ const DailyPlans = ({ className }: Props) => {
 
   return (
     <div className={`${className}`}>
-      <h3 className="font-bold">Daily</h3>
+      <h3 className="font-bold">eYarly</h3>
       <Container 
       className="flex flex-col  ">
         <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">

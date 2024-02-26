@@ -3,39 +3,39 @@ import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addDailyStart,
-  addDailySuccess,
-  addDailyFailed,
-  initialDaily,
-} from "../redux/slices/dailySlice";
-import toast, { Toaster } from "react-hot-toast";
+  addMonthlyStart,
+  addMonthlySuccess,
+  addMonthlyFailed,
+  initialMonthly,
+} from "../redux/slices/monthlySlice";
+import { Toaster } from "react-hot-toast";
 import axios from "axios";
-import DailyItem from "./DailyItem";
+import MonthlyItem from "./MonthlyYearlyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
 interface Props {
   className: String;
 }
-const DailyPlans = ({ className }: Props) => {
+const MonthlyPlans = ({ className }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
   const newPlan = {
     content: "new plan",
   };
   const { curUser } = useSelector((state: any) => state.user);
-  const { allDailyData,newDailyPlan } = useSelector((State: any) => State.daily);
-  const { firstFetchDailyPlans } = useSelector((state: any) => state.user);
+  const { allMonthlyData,newMonthlyPlan } = useSelector((State: any) => State.monthly);
+  const { firstFetchMonthlyPlans } = useSelector((state: any) => state.user);
   useEffect(() => {
-    if (firstFetchDailyPlans) {
+    if (firstFetchMonthlyPlans) {
       try {
         const fetchPlans = async () => {
-          console.log("fetch daily plans");
+          console.log("fetch Monthly plans");
           if (curUser) {
             const res = await axios.get(
-              `http://localhost:8800/api/dailyPlan/${curUser._id}`
+              `http://localhost:8800/api/MonthlyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
-            dispatch(initialDaily(res.data));
+            dispatch(initialMonthly(res.data));
           }
         };
         fetchPlans();
@@ -46,27 +46,28 @@ const DailyPlans = ({ className }: Props) => {
 
       return;
     }
-  }, [newDailyPlan,curUser]);
+  }, [newMonthlyPlan,curUser]);
 
   return (
     <div className={`${className}`}>
-      <h3 className="font-bold">Daily</h3>
+      <h3 className="font-bold">Monthly</h3>
       <Container 
       className="flex flex-col  ">
         <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">
-          {allDailyData &&
-            allDailyData.map((plan: any) => (
+          {allMonthlyData &&
+            allMonthlyData.map((plan: any) => (
               <li
                 key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <DailyItem data={plan} />
+                <MonthlyItem data={plan} />
               </li>
             ))}
         </ul>
 
-        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-4">
-        <DailyItem />
+        <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-4">
+        
+        <MonthlyItem />
 
         </div>
       </Container>
@@ -91,4 +92,4 @@ const DailyPlans = ({ className }: Props) => {
   );
 };
 
-export default DailyPlans;
+export default MonthlyPlans;

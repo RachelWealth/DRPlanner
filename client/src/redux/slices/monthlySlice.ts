@@ -18,8 +18,8 @@ const initialState: MonthlyState = {
   firstFetchMonthlyPlans: true,
 };
 
-export const MonthlySlice = createSlice({
-  name: "Monthly",
+export const monthlySlice = createSlice({
+  name: "monthly",
   initialState,
   reducers: {
     initialMonthly:(state,action)=>{
@@ -57,5 +57,5 @@ export const {
   updateToServerSuccess,
   updateToServerFailed,
   initialMonthly,
-} = MonthlySlice.actions;
-export default MonthlySlice.reducer;
+} = monthlySlice.actions;
+export default monthlySlice.reducer;
