@@ -68,7 +68,7 @@ const DailyPlans = ({ className }: Props) => {
             ))}
         </ul>
 
-        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-4">
+        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-2">
         <DailyItem />
 
         </div>

@@ -65,7 +65,7 @@ const MonthlyPlans = ({ className }: Props) => {
             ))}
         </ul>
 
-        <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-4">
+        <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-1">
         
         <MonthlyItem />
 

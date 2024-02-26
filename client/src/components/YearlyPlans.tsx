@@ -10,7 +10,7 @@ import {
 } from "../redux/slices/dailySlice";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import DailyItem from "./DailyItem";
+import YearlyItem from "./MonthlyYearlyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
 interface Props {
   className: String;
@@ -60,13 +60,13 @@ const DailyPlans = ({ className }: Props) => {
                 key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <DailyItem data={plan} />
+                <YearlyItem data={plan} />
               </li>
             ))}
         </ul>
 
-        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-4">
-        <DailyItem />
+        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-1">
+        <YearlyItem />
 
         </div>
       </Container>

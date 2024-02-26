@@ -79,7 +79,7 @@ const DailyItem = ({ data }: Props) => {
   }
 
   return (
-    <div><div className=" flex h-[50px] p-1 rounded-md border-gray-300 border-2 gap-2 justify-start items-center bg-white">
+    <div><div className=" flex h-[35px] p-1 rounded-md border-gray-300 border-2 gap-2 justify-start items-center bg-white">
     <div className="w-1/10 items-center "><input
       type="checkbox"
       id="green-checkbox"
