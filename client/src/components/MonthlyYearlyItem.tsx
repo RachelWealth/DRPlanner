@@ -9,9 +9,10 @@ import { DateTime } from "luxon";
 import ProgressBar from "./ProgressBar";
 import { proBarCalculate } from "../util/proBarCaculate";
 interface Props {
+  type:String,
   data?: any;
 }
-const DailyItem = ({ data }: Props) => {
+const MonthlyYearlyItem = ({ type,data }: Props) => {
   const initialDaily={
     content: null,
     priority: "Low",
@@ -46,7 +47,7 @@ const DailyItem = ({ data }: Props) => {
     
     try {
       const response = await axios.post(
-        `http://localhost:8800/api/dailyPlan/create/${curUser._id}`,
+        `http://localhost:8800/api/${type}/create/${curUser._id}`,
         {
           repeatType: 1,
           startDate: formattedDate,
@@ -79,7 +80,7 @@ const DailyItem = ({ data }: Props) => {
   }
 
   return (
-    <div><div className=" flex h-[50px] p-1 rounded-md border-gray-300 border-2 gap-2 justify-start items-center bg-white">
+    <div><div className=" flex h-[30px] rounded-md gap-2 justify-start items-center bg-white">
     <div className="w-1/10 items-center "><input
       type="checkbox"
       id="green-checkbox"
@@ -115,6 +116,6 @@ const DailyItem = ({ data }: Props) => {
   );
 };
 
-export default DailyItem;
+export default MonthlyYearlyItem;
 
 

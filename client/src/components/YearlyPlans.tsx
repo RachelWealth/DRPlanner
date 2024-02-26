@@ -8,7 +8,8 @@ import {
   addDailyFailed,
   initialDaily,
 } from "../redux/slices/dailySlice";
-import toast, { Toaster } from "react-hot-toast";
+import YearlyItem from "./MonthlyYearlyItem";
+import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
@@ -28,10 +29,10 @@ const DailyPlans = ({ className }: Props) => {
     if (firstFetchDailyPlans) {
       try {
         const fetchPlans = async () => {
-          console.log("fetch daily plans");
+          console.log("fetch yearly plans");
           if (curUser) {
             const res = await axios.get(
-              `http://localhost:8800/api/dailyPlan/${curUser._id}`
+              `http://localhost:8800/api/yearlyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
@@ -60,13 +61,13 @@ const DailyPlans = ({ className }: Props) => {
                 key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <DailyItem data={plan} />
+                <YearlyItem data={plan} type={"yearly"}/>
               </li>
             ))}
         </ul>
 
-        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-4">
-        <DailyItem />
+        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-1">
+        <YearlyItem  type={"yearly"}/>
 
         </div>
       </Container>

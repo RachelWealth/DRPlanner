@@ -31,7 +31,7 @@ const MonthlyPlans = ({ className }: Props) => {
           console.log("fetch Monthly plans");
           if (curUser) {
             const res = await axios.get(
-              `http://localhost:8800/api/MonthlyPlan/${curUser._id}`
+              `http://localhost:8800/api/monthlyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
@@ -60,14 +60,14 @@ const MonthlyPlans = ({ className }: Props) => {
                 key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <MonthlyItem data={plan} />
+                <MonthlyItem type={"monthly"} data={plan} />
               </li>
             ))}
         </ul>
 
-        <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-4">
+        <div id="addNewMonthly" className="overflow-hidden bg-white  rounded-md shadow-md mt-auto p-1">
         
-        <MonthlyItem />
+        <MonthlyItem  type={"monthly"}/>
 
         </div>
       </Container>
