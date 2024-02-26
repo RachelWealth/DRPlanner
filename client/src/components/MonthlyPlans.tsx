@@ -1,64 +1,94 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import Container from './Container'
-import { useDispatch } from 'react-redux'
-import { addDailyStart,addDailySuccess,addDailyFailed } from '../redux/slices/dailySlice';
-import toast, { Toaster } from 'react-hot-toast';
-import axios from 'axios';
-interface Props{
-  className:String;
+import React, { useEffect, useState } from "react";
+import Container from "./Container";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addDailyStart,
+  addDailySuccess,
+  addDailyFailed,
+  initialDaily,
+} from "../redux/slices/dailySlice";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import DailyItem from "./DailyItem";
+import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
+interface Props {
+  className: String;
 }
-const MonthlyPlans = ({className}:Props) => {
-  const dispatch = useDispatch()
-  const plan = {
-    content:"new plan",
-  }
+const DailyPlans = ({ className }: Props) => {
+  const dispatch = useDispatch();
+  axios.defaults.withCredentials = true;
+  const newPlan = {
+    content: "new plan",
+  };
+  const { curUser } = useSelector((state: any) => state.user);
+  const { allDailyData,newDailyPlan } = useSelector((State: any) => State.daily);
+  const { firstFetchDailyPlans } = useSelector((state: any) => state.user);
+  useEffect(() => {
+    if (firstFetchDailyPlans) {
+      try {
+        const fetchPlans = async () => {
+          console.log("fetch daily plans");
+          if (curUser) {
+            const res = await axios.get(
+              `http://localhost:8800/api/dailyPlan/${curUser._id}`
+            );
+            console.log(res);
+            dispatch(firstFetchSuccess());
+            dispatch(initialDaily(res.data));
+          }
+        };
+        fetchPlans();
+      } catch (error) {
+        console.log(error);
+        dispatch(firstFetchFailed());
+      }
 
-  const [plans,setPlans] = useState([])
-  useEffect(()=>{
-    const fetchPlans = async()=>{
-      const res = axios.get("/dailyPlan/65d53c7db9bd7a03b030419d")
-   
+      return;
     }
-  },[])
+  }, [newDailyPlan,curUser]);
+
   return (
     <div className={`${className}`}>
-        <h3>Monthly</h3>
-        <Container>
-            <div className='border-black border-[5px] w-5 h-5 m-5'></div>
-        <button 
-        type="button" 
-        className='rounded-full w-5 h-5 bg-black'
-        onClick={()=>{dispatch(addDaily(plan));toast.success(
-          `${plan?.content.substring(0,12)}...created`
-        )
+      <h3 className="font-bold">Daily</h3>
+      <Container 
+      className="flex flex-col  ">
+        <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">
+          {allDailyData &&
+            allDailyData.map((plan: any) => (
+              <li
+                key={plan._id}
+                className="bg-white p-4 mb-2 rounded-md shadow-md"
+              >
+                <DailyItem data={plan} />
+              </li>
+            ))}
+        </ul>
 
-        }}>add</button>
-        </Container>
-        <Toaster
-        position='bottom-center'
-        toastOptions={
-          {
-            success:{
-              style:{
-                background:'green',
-                color:"#fffff",
-              }
+        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-4">
+        <DailyItem />
+
+        </div>
+      </Container>
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          success: {
+            style: {
+              background: "green",
+              color: "#fffff",
             },
-            error:{
-              style:{
-                background:'red',
-                color:"#000000",
-              }
-            }
-          }
-
-          
-        }
-        
-        />
+          },
+          error: {
+            style: {
+              background: "red",
+              color: "#000000",
+            },
+          },
+        }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default MonthlyPlans
+export default DailyPlans;
