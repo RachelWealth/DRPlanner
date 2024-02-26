@@ -109,8 +109,9 @@ const MonthlyYearlyItem = ({ type,data }: Props) => {
       ))}
     </select>
   </div>
-  <ProgressBar progress={proBarCalculate(data)} />
-</div>
+  <ProgressBar progress={proBarCalculate(data)} >
+
+  </ProgressBar></div>
     
   );
 };

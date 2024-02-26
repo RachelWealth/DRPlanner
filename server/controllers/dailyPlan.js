@@ -18,7 +18,7 @@ export const createDailyPlan = async(req,res,next)=>{
     }
 }
 
-export const getDailyPlans = async(req,res,next)=>{
+export const getDaiyPlans = async(req,res,next)=>{
     try {
         console.log(req)
         const user = await User.findById(req.params.userID)

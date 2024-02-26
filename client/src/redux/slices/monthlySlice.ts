@@ -1,46 +1,61 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
- 
-// Async thunk for fetching tasks
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    try {
-      const response = await fetch('/api/dailyPlan/');
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      throw error; // Rethrow the error to be caught by the async thunk
-    }
-  });
-  
-const initialState={
-    newDailyPlan:"",
-    error:false,
-    loading:false,
-    allMonthlyData:[]
+
+interface MonthlyState {
+  loading: boolean;
+  newMonthlyPlan: any; // Change 'any' to the actual type of newMonthlyPlan
+  allMonthlyData: any[]; // Change 'any' to the actual type of allMonthlyData
+  error: boolean,
+  updated:boolean
+  firstFetchMonthlyPlans:boolean
 }
+const initialState: MonthlyState = {
+  newMonthlyPlan: {},
+  error: false,
+  loading: false,
+  updated: false,
+  allMonthlyData: [],
+  firstFetchMonthlyPlans: true,
+};
 
 export const monthlySlice = createSlice({
-    name:'daily',
-    initialState,
-    reducers:{
-        addDailyStart:(state)=>{
-state.loading=true
-        },
-        addDailySuccess:(state,action)=>{
-          state.loading=false
-            state.allMonthlyData.push(action.payload)
+  name: "monthly",
+  initialState,
+  reducers: {
+    initialMonthly:(state,action)=>{
+      console.log(action.payload)
+      state.allMonthlyData=action.payload
+    },
+    addMonthlyStart: (state) => {
+      state.loading = true;
+    },
+    addMonthlySuccess: (state = initialState, action) => {
+      state.loading = false;
+      state.newMonthlyPlan=action.payload
+      state.allMonthlyData.push(action.payload);
 
-            //TO DO
-            // connect with backend server
-        },
-        addDailyFailed:(state)=>{
-          state.loading=false
-          state.error=true
-        }
+      //TO DO
+      // connect with backend server
+    },
+    addMonthlyFailed: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    updateToServerSuccess: (state) => {
+      state.updated = true;
+    },
+    updateToServerFailed: (state) => {
+      state.updated = false;
+    },
+  },
+});
 
-    }
-})
-
-export const {addDailyStart,addDailySuccess,addDailyFailed} = monthlySlice.actions;
+export const {
+  addMonthlyStart,
+  addMonthlySuccess,
+  addMonthlyFailed,
+  updateToServerSuccess,
+  updateToServerFailed,
+  initialMonthly,
+} = monthlySlice.actions;
 export default monthlySlice.reducer;

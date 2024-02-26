@@ -12,6 +12,8 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
+import ProgressBar from "./ProgressBar";
+import { proBarCalculate } from "../util/proBarCaculate";
 interface Props {
   className: String;
 }
@@ -24,6 +26,7 @@ const DailyPlans = ({ className }: Props) => {
   const { curUser } = useSelector((state: any) => state.user);
   const { allDailyData,newDailyPlan } = useSelector((State: any) => State.daily);
   const { firstFetchDailyPlans } = useSelector((state: any) => state.user);
+  
   useEffect(() => {
     if (firstFetchDailyPlans) {
       try {
@@ -69,6 +72,9 @@ const DailyPlans = ({ className }: Props) => {
         <DailyItem />
 
         </div>
+        <div className="block">
+         
+          </div>
       </Container>
       <Toaster
         position="bottom-center"

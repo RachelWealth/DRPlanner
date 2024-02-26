@@ -15,13 +15,13 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const {curUser} = useSelector((state: any) =>state.user)
-  useEffect(()=>{
-    console.log("user changed, update navbar")
-  },[curUser])
+  // useEffect(()=>{
+  //   console.log("user changed, update navbar")
+  // },[curUser])
   return (
-    <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
+    <div className="w-full h-12 bg-white border-b-[1px] border-b-gray-400">
       <nav
-        className="h-full max-w-screen-xl mx-auto px-4 xl:px-0 flex 
+        className="h-full m-1 max-w-screen-xl mx-auto px-4 xl:px-0 flex 
         items-center justify-between gap-2"
       >
         <div className="flex-1 lg:inline-flex items-center lg:left-1 justify-start pl-10">
@@ -40,7 +40,7 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Please input the key word"
-            className="flex-1 h-full outline-none bg-transparent placeholder:text-gray-600"
+            className="flex-1 h-full  outline-none bg-transparent placeholder:text-gray-600"
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
           />

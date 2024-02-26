@@ -1,12 +1,19 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface DailyState {
+  loading: boolean;
+  newDailyPlan: any; // Change 'any' to the actual type of newDailyPlan
+  allDailyData: any[]; // Change 'any' to the actual type of allDailyData
+  error: boolean,
+  updated:boolean
+  firstFetchDailyPlans:boolean
+}
+const initialState: DailyState = {
   newDailyPlan: {},
   error: false,
   loading: false,
   updated: false,
   allDailyData: [],
-  
   firstFetchDailyPlans: true,
 };
 
