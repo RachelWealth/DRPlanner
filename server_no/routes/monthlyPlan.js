@@ -1,5 +1,6 @@
 import express from "express";
-import {} from "../controllers/monthlyPlan.js";
+import {createMonthlyPlan,deleteMonthlyPlan,updateMonthlyPlan,getMonthlyPlans } from "../controllers/monthlyPlan.js";
+import { verifyToken } from "../verifyToken.js";
 
 const router = express.Router();
 
@@ -13,6 +14,6 @@ router.get("/:userID",verifyToken,getMonthlyPlans)
 router.delete("/:userID/:id",verifyToken,deleteMonthlyPlan)
 
 // //update a daily item
-router.put("/:id",verifyToken,updateMonthlyPlan)
+router.put("/:userID/:id",verifyToken,updateMonthlyPlan)
 
 export default router;

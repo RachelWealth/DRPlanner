@@ -1,14 +1,14 @@
 import { createError } from "../error.js"
 import MonthlyPlan from "../models/MonthlyPlan.js"
 import axios from "axios"
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export const createMonthlyPlan = async(req,res,next)=>{
     try {
         const monthlyplan = new MonthlyPlan({...req.body})
         await monthlyplan.save()
         const planID = monthlyplan._id
-        await axios.put(`http://localhost:8800/api/users/monthly/${req.params.userID}/${planID}`,{
+        await axios.put(`/api/users/monthly/${req.params.userID}/${planID}`,{
             userID:req.params.userID,
             id:planID
         })
@@ -37,9 +37,8 @@ export const getMonthlyPlans = async(req,res,next)=>{
 
 
 export const updateMonthlyPlan =async(req,res,next)=>{
-    if(req.params.id===req.monthlyPlan.id){
         try {
-            const updatedPlan = await MonthlyPlan.findByIdAndUpdate({
+            const updatedPlan = await MonthlyPlan.findByIdAndUpdate(req.params.id,{
                 $set:req.body
             },{new:true}
             )
@@ -47,7 +46,7 @@ export const updateMonthlyPlan =async(req,res,next)=>{
         } catch (error) {
             next(error)
         }
-    }
+
     //if is compelete
 }
 

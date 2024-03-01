@@ -5,8 +5,9 @@ interface DailyState {
   newDailyPlan: any; // Change 'any' to the actual type of newDailyPlan
   allDailyData: any[]; // Change 'any' to the actual type of allDailyData
   error: boolean,
-  updated:boolean
-  firstFetchDailyPlans:boolean
+  updated:boolean,
+  firstFetchDailyPlans:boolean,
+  choicedPlanDetails:any,
 }
 const initialState: DailyState = {
   newDailyPlan: {},
@@ -15,6 +16,7 @@ const initialState: DailyState = {
   updated: false,
   allDailyData: [],
   firstFetchDailyPlans: true,
+  choicedPlanDetails:{}
 };
 
 export const dailySlice = createSlice({
@@ -28,13 +30,10 @@ export const dailySlice = createSlice({
     addDailyStart: (state) => {
       state.loading = true;
     },
-    addDailySuccess: (state = initialState, action) => {
+    addDailySuccess: (state, action) => {
       state.loading = false;
       state.newDailyPlan=action.payload
       state.allDailyData.push(action.payload);
-
-      //TO DO
-      // connect with backend server
     },
     addDailyFailed: (state) => {
       state.loading = false;
@@ -46,6 +45,20 @@ export const dailySlice = createSlice({
     updateToServerFailed: (state) => {
       state.updated = false;
     },
+    updateDailyPlanStart:(state,action)=>{
+      state.choicedPlanDetails=action.payload
+      
+      state.loading=true;
+    },
+    updateDailyPlanSuccess:(state,action)=>{
+      state.loading=false;
+      state.updated=true;
+      state.allDailyData.push(action.payload);
+    },
+    updateDailyPlanFailed:(state)=>{
+      state.loading=false;
+      state.updated=true;
+    }
   },
 });
 
@@ -56,5 +69,8 @@ export const {
   updateToServerSuccess,
   updateToServerFailed,
   initialDaily,
+  updateDailyPlanStart,
+  updateDailyPlanSuccess,
+  updateDailyPlanFailed
 } = dailySlice.actions;
 export default dailySlice.reducer;

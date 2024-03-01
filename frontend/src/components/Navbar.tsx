@@ -15,9 +15,6 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const {curUser} = useSelector((state: any) =>state.user)
-  // useEffect(()=>{
-  //   console.log("user changed, update navbar")
-  // },[curUser])
   return (
     <div className="w-full h-12 bg-white border-b-[1px] border-b-gray-400">
       <nav

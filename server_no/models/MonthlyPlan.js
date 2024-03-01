@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DailyPlanSchema = new mongoose.Schema({
+const MonthlyPlanSchema = new mongoose.Schema({
     id:{
         type:Number,
         required:true,
@@ -37,4 +37,4 @@ const DailyPlanSchema = new mongoose.Schema({
 {timestamps: true});
 
 
-export default mongoose.model("monthlyPlan",MonthlyPlan);
+export default mongoose.model("MonthlyPlan",MonthlyPlanSchema);

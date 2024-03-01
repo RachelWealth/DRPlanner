@@ -23,21 +23,14 @@ const connect = ()=>{
         throw err;
     })
 }
+//connect()
 import cors from 'cors';
-
-
 app.use(cors({
   origin: 'http://localhost:3000', // Specify the exact origin of your frontend
   credentials: true,
 }));
 
-// CORS on ExpressJS
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.header("Content-Type", "application/json");
-//     next();
-// });
+
 
 app.use(cookieParser());
 app.use(express.json()); // Allowed come in json data
@@ -46,7 +39,9 @@ app.use("/api/dailyPlan",dailyPlanRouters)
 app.use("/api/monthlyPlan",monthlyPlanRouters)
 app.use("/api/yearlyPlan",yearlyPlanRouters)
 app.use("/api/auth",authRouters)
-
+app.use("/",(req,res)=>{
+res.status(200).send("hello world")
+})
 app.use((err,req,res,next)=>{
     const status=err.status || 500;
     const message = err.message || "Something went wrong";
@@ -63,3 +58,6 @@ app.listen(8800,()=>{
     connect();
     console.log("Connected to Server");
 })
+
+// import serverless from 'serverless-http';
+// module.exports.handler = serverless(app)

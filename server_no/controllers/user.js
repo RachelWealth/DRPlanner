@@ -1,10 +1,10 @@
 import { createError } from "../error.js"
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export const updateUser = async (req,res,next)=>{
-    if(req.params.id === req.user.id){
-        try {
-            const updatedUser = await User.findByIdAndUpdate(req.params.id,{
+    if(req.params.userID === req.body._id){  
+              try {
+            const updatedUser = await User.findByIdAndUpdate(req.params.userID,{
                 $set: req.body
             },{new:true}
             )
@@ -18,7 +18,7 @@ export const updateUser = async (req,res,next)=>{
 }
 
 export const deleteUser = async(req,res,next)=>{
-    if(req.params.id === req.user.id){
+    if(req.params.id === req.body._id){
         try {
             await User.findByIdAndDelete(req.params.id,{
                 $set: req.body
@@ -40,7 +40,6 @@ export const getUser =async (req,res,next)=>{
 export const addDailyPlan = async (req, res, next) => {
     try {
         console.log(req.params);
-
         await User.findByIdAndUpdate(req.params.userID, {
             $push: { daily: req.params.id }
         });

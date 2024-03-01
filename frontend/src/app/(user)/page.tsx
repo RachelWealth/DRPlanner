@@ -1,10 +1,18 @@
-
+"use client"
 import PlansDashBoard from '@/src/components/Plans'
+import SidebarWithBurgerMenu from '@/src/components/Sidebar'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <PlansDashBoard></PlansDashBoard>
+    
+    <div className=''>
+       <div className="absolute top-0 left-0 h-full ">
+        <SidebarWithBurgerMenu />
+      </div>
+ <PlansDashBoard ></PlansDashBoard>
+    </div>
+   
     
   )
 }

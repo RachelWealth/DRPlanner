@@ -11,13 +11,16 @@ import {
 import Popup from "reactjs-popup";
 import {auth,provider} from "../firebase"
 import {signInWithPopup} from "firebase/auth"
-
+import nextConfig from "../../next.config.mjs";
+import { env } from "process";
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const dispatch = useDispatch();
+  dispatch(loginStart());
+    const env = nextConfig.publicRuntimeConfig
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -26,27 +29,32 @@ const Login = () => {
       setErrorMessage("Please enter both email and password");
       return;
     }
-    dispatch(loginStart());
+    
     try {
       // Send a POST request to the server
-      const response = await axios.post(
-        `http://localhost:8800/api/auth/signin`,
-        {
-          username: "username",
-          email: email,
-          pw: password,
-        }
-      );
-      dispatch(loginSuccess(response.data));
-      // Handle the response here (e.g., check if login was successful)
-      console.log("Server Response:", response.data);
-
+      if(env){
+        const response = await axios.post(
+          `${env.NEXT_PUBLIC_SERVER_HOST}/api/auth/signin`,
+          {
+            username: "username",
+            email: email,
+            pw: password,
+          }
+        );
+        dispatch(loginSuccess(response.data));
+        // Handle the response here (e.g., check if login was successful)
+        console.log("Server Response:", response.data);
+  
+        
+        // Clear form and error message
+        setemail("");
+        setPassword("");
+        setErrorMessage("");
+        setIsPopupOpen(false);
+      }else{
+        dispatch(loginFailed());
+      }
       
-      // Clear form and error message
-      setemail("");
-      setPassword("");
-      setErrorMessage("");
-      setIsPopupOpen(false);
     } catch (error) {
       dispatch(loginFailed());
       // Handle errors, e.g., display error message
@@ -66,14 +74,19 @@ const Login = () => {
   function signWithGoogle(): void {
     signInWithPopup(auth,provider) .then((result) => {
       dispatch(loginStart())
-      axios.post("http://localhost:8800/api/auth/google",{
-        name:result.user.displayName,
-        email:result.user.email,
-        img:result.user.photoURL,
-      }).then((res)=>{
-        dispatch(loginSuccess(res.data))
-      })
-      console.log(result)
+      if(env){
+        axios.post(`${env.NEXT_PUBLIC_SERVER_HOST}/api/auth/google`,{
+          name:result.user.displayName,
+          email:result.user.email,
+          img:result.user.photoURL,
+        }).then((res)=>{
+          dispatch(loginSuccess(res.data))
+        })
+        console.log(result)
+      }else{
+        dispatch(loginFailed())
+      }
+      
     })
     .catch((error) => {
       dispatch(loginFailed())

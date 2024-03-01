@@ -11,11 +11,14 @@ import {
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import MonthlyItem from "./MonthlyYearlyItem";
+import "../styles/homepage.css"
+import nextConfig from "@/next.config.mjs";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
 interface Props {
   className: String;
+  checkClickItem:(value:boolean)=>void;
 }
-const MonthlyPlans = ({ className }: Props) => {
+const MonthlyPlans = ({ className,checkClickItem }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
   const newPlan = {
@@ -26,12 +29,16 @@ const MonthlyPlans = ({ className }: Props) => {
   const { firstFetchMonthlyPlans } = useSelector((state: any) => state.user);
   useEffect(() => {
     if (firstFetchMonthlyPlans) {
+      const env = nextConfig.publicRuntimeConfig
       try {
+        if(!env){
+          return ;
+        }
         const fetchPlans = async () => {
           console.log("fetch Monthly plans");
           if (curUser) {
             const res = await axios.get(
-              `http://localhost:8800/api/monthlyPlan/${curUser._id}`
+              `${env.NEXT_PUBLIC_SERVER_HOST}/api/monthlyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
@@ -53,21 +60,23 @@ const MonthlyPlans = ({ className }: Props) => {
       <h3 className="font-bold">Monthly</h3>
       <Container 
       className="flex flex-col  ">
-        <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">
+        <ul className="overflow-y-auto flex-1 list-none scrollbar-hide mb-2">
           {allMonthlyData &&
             allMonthlyData.map((plan: any) => (
+             
               <li
-                key={plan._id}
+                // key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <MonthlyItem data={plan} />
+                
+                <MonthlyItem data={plan} type="li"/>
               </li>
             ))}
         </ul>
 
         <div id="addNewMonthly" className="bg-white  rounded-md shadow-md mt-auto p-1">
         
-        <MonthlyItem />
+        <MonthlyItem type="uni"/>
 
         </div>
       </Container>

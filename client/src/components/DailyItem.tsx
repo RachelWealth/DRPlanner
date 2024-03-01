@@ -94,7 +94,6 @@ const DailyItem = ({ data }: Props) => {
       />
 
       <select
-    
         defaultValue={newPriority}
         className="flex-2 h-full"
         onChange={handleChangePriority}

@@ -11,11 +11,14 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import YearlyItem from "./MonthlyYearlyItem";
+import "../styles/homepage.css"
+import nextConfig from "@/next.config.mjs";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
 interface Props {
   className: String;
+  checkClickItem:(value:boolean)=>void;
 }
-const DailyPlans = ({ className }: Props) => {
+const DailyPlans = ({ className,checkClickItem }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
   const newPlan = {
@@ -26,12 +29,15 @@ const DailyPlans = ({ className }: Props) => {
   const { firstFetchDailyPlans } = useSelector((state: any) => state.user);
   useEffect(() => {
     if (firstFetchDailyPlans) {
+      const env = nextConfig.publicRuntimeConfig
       try {
         const fetchPlans = async () => {
-          console.log("fetch daily plans");
+          console.log("fetch yearly plans");
+          if(!env)  return ;
+          
           if (curUser) {
             const res = await axios.get(
-              `http://localhost:8800/api/dailyPlan/${curUser._id}`
+              `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
@@ -50,23 +56,23 @@ const DailyPlans = ({ className }: Props) => {
 
   return (
     <div className={`${className}`}>
-      <h3 className="font-bold">eYarly</h3>
+      <h3 className="font-bold">Yearly</h3>
       <Container 
       className="flex flex-col  ">
-        <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">
-          {allDailyData &&
+        <ul className="overflow-y-auto flex-1 list-none scrollbar-hide mb-2">
+          {Array.isArray(allDailyData) &&
             allDailyData.map((plan: any) => (
               <li
-                key={plan._id}
+                // key={plan._id}
                 className="bg-white p-4 mb-2 rounded-md shadow-md"
               >
-                <YearlyItem data={plan} />
+                <YearlyItem data={plan} type={"li"} />
               </li>
             ))}
         </ul>
 
         <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-1">
-        <YearlyItem />
+        <YearlyItem type={"uni"} />
 
         </div>
       </Container>

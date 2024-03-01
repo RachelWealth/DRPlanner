@@ -5,7 +5,7 @@ import { updateUser,deleteUser,addDailyPlan,deleteDailyPlan } from "../controlle
 
 const router = express.Router();
 //update a user
-router.put("/:id",verifyToken,updateUser)
+router.put("/:userID",verifyToken,updateUser)
 
 // //delete a user
  router.delete("/:id",verifyToken,deleteUser)

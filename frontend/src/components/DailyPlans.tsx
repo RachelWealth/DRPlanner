@@ -7,34 +7,57 @@ import {
   addDailySuccess,
   addDailyFailed,
   initialDaily,
+  updateDailyPlanStart,
 } from "../redux/slices/dailySlice";
-import toast, { Toaster } from "react-hot-toast";
+import dotenv from "dotenv";
+dotenv.config();
+import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
-import ProgressBar from "./ProgressBar";
-import { proBarCalculate } from "../util/proBarCaculate";
+import "../styles/homepage.css";
 interface Props {
   className: String;
+  checkClickItem: (value: boolean) => void;
+  getPlanInfo: (planInfo: any) => void;
 }
-const DailyPlans = ({ className }: Props) => {
+import nextConfig from "../../next.config.mjs";
+import { DateTime } from "luxon";
+
+const DailyPlans = ({ className, checkClickItem, getPlanInfo }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
-  const newPlan = {
-    content: "new plan",
-  };
+
   const { curUser } = useSelector((state: any) => state.user);
-  const { allDailyData,newDailyPlan } = useSelector((State: any) => State.daily);
-  const { firstFetchDailyPlans } = useSelector((state: any) => state.user);
-  
+  const { allDailyData } = useSelector(
+    (state: any) => state.daily
+  );
+
+  const { needFirstFetchDailyPlans } = useSelector((state: any) => state.user);
+  const handleCheckClickItem = (id: String) => {
+    console.log(allDailyData);
+    for (const plan in allDailyData) {
+      console.log(plan);
+      if (allDailyData[plan]._id === id) {
+        //getPlanInfo(plan)
+        return allDailyData[plan];
+      }
+    }
+    //getPlanInfo(allDailyData.find(function(item:any) {return item._id === id}))
+  };
+  const handleClickli = (plan: any) => {
+    dispatch(updateDailyPlanStart(handleCheckClickItem(plan._id)));
+    checkClickItem(true);
+  };
   useEffect(() => {
-    if (firstFetchDailyPlans) {
+    if (needFirstFetchDailyPlans) {
       try {
+        const env = nextConfig.publicRuntimeConfig;
         const fetchPlans = async () => {
-          console.log("fetch daily plans");
-          if (curUser) {
+          if (curUser && env) {
+            console.log("fetch daily plans");
             const res = await axios.get(
-              `http://localhost:8800/api/dailyPlan/${curUser._id}`
+              `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}`
             );
             console.log(res);
             dispatch(firstFetchSuccess());
@@ -46,35 +69,41 @@ const DailyPlans = ({ className }: Props) => {
         console.log(error);
         dispatch(firstFetchFailed());
       }
-
-      return;
     }
-  }, [newDailyPlan,curUser]);
+  }, [allDailyData,curUser]);
 
   return (
     <div className={`${className}`}>
       <h3 className="font-bold">Daily</h3>
-      <Container 
-      className="flex flex-col  ">
-        <ul className="overflow-y-auto flex-1 list-none no-scrollbar mb-2">
-          {allDailyData &&
-            allDailyData.map((plan: any) => (
-              <li
-                key={plan._id}
-                className="bg-white p-4 mb-2 rounded-md shadow-md"
-              >
-                <DailyItem data={plan} />
-              </li>
-            ))}
+      <Container className="flex flex-col  ">
+        <ul className="overflow-y-auto flex-1 list-none scrollbar-hide mb-2">
+          {Array.isArray(allDailyData) &&
+            allDailyData
+              .filter((plan) => {
+                const currentDate = DateTime.local();
+                const startDate =  DateTime.fromISO(plan.startDate);
+                const endDate =  DateTime.fromISO(plan.endDate);
+                // console.log(currentDate, startDate, endDate);
+                return currentDate >= startDate && currentDate <= endDate;
+              })
+              .map((plan: any) => (
+                <li
+                  onClick={() => handleClickli(plan)}
+                  key={plan._id}
+                  className="hover:bg-gray-200 bg-white p-4 mb-2 rounded-md shadow-md"
+                >
+                  <DailyItem data={plan} type="li" />
+                </li>
+              ))}
         </ul>
 
-        <div id="addNewDaily" className="bg-white  rounded-md shadow-md mt-auto p-2">
-        <DailyItem />
-
+        <div
+          id="addNewDaily"
+          className="bg-white  rounded-md shadow-md mt-auto p-2"
+        >
+          <DailyItem type="uni" />
         </div>
-        <div className="block">
-         
-          </div>
+        <div className="block"></div>
       </Container>
       <Toaster
         position="bottom-center"

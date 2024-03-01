@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import MonthlyItem from "./MonthlyYearlyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
+import nextConfig from "../../next.config.mjs";
 interface Props {
   className: String;
 }
@@ -27,6 +28,7 @@ const MonthlyPlans = ({ className }: Props) => {
   useEffect(() => {
     if (firstFetchMonthlyPlans) {
       try {
+        const env=nextConfig.
         const fetchPlans = async () => {
           console.log("fetch Monthly plans");
           if (curUser) {

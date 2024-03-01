@@ -7,10 +7,12 @@ import toast from "react-hot-toast";
 import { DateTime } from "luxon";
 import ProgressBar from "./ProgressBar";
 import { proBarCalculate } from "../util/proBarCaculate";
+import nextConfig from "@/next.config.mjs";
 interface Props {
   data?: any;
+  type: string;
 }
-const DailyItem = ({ data }: Props) => {
+const MonthYearlyItem = ({ data,type }: Props) => {
   const initialDaily={
     content: null,
     priority: "Low",
@@ -24,7 +26,7 @@ const DailyItem = ({ data }: Props) => {
   const {curUser} = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const priority = ["None", "Low", "Medium", "High", "Urgent"];
-  
+  const env = nextConfig.publicRuntimeConfig
   async function handleKeyDown(event: { key: string; }): Promise<void> {
     if (event.key === 'Enter'){
       console.log(event.key)
@@ -32,20 +34,16 @@ const DailyItem = ({ data }: Props) => {
         toast.success(`Please Login`);
         return;
       }
-    
-    
-    dispatch(
-      addDailySuccess({
-        content: newContent,
-        priority: newPriority,
-      })
-    );
+
     const currentDate = DateTime.now();
     const formattedDate = currentDate.toFormat('yyyy-MM-dd');
-    
+    if(!env){
+      dispatch(addDailyFailed())
+      return ;
+    }
     try {
       const response = await axios.post(
-        `http://localhost:8800/api/dailyPlan/create/${curUser._id}`,
+        `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/create/${curUser._id}`,
         {
           repeatType: 1,
           startDate: formattedDate,
@@ -62,9 +60,8 @@ const DailyItem = ({ data }: Props) => {
     } catch (error) {
       console.log(error)
       dispatch(addDailyFailed())
+      }
     }
-  }
-    
   }
 
   function setInputValue(value: string): void {
@@ -113,4 +110,4 @@ const DailyItem = ({ data }: Props) => {
   );
 };
 
-export default DailyItem;
+export default MonthYearlyItem;

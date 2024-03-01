@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import { createError } from "../error.js";
 import jwt from "jsonwebtoken";
 
@@ -33,6 +33,7 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
+        secure:true
       })
       .status(200)
       .json(others);

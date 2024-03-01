@@ -4,7 +4,7 @@ const initialState = {
   curUser: null,
   loading: false,
   error: false,
-  firstFetchDailyPlans: true,
+  needFirstFetchDailyPlans: true,
 };
 
 export const userSlice = createSlice({
@@ -17,28 +17,28 @@ export const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.loading = true;
       state.curUser = action.payload;
-      state.firstFetchDailyPlans = true;
+      state.needFirstFetchDailyPlans = true;
     },
     loginFailed: (state) => {
       state.loading = false;
       state.error = true;
-      state.firstFetchDailyPlans = false;
+      state.needFirstFetchDailyPlans = true;
     },
     logout: (state) => {
       //state=initialState
       state.curUser = null;
       state.loading = false;
       state.error = false;
-      state.firstFetchDailyPlans = true;
+      state.needFirstFetchDailyPlans = true;
     },
     changeAccount: (state, action) => {
       //TODO
     },
     firstFetchSuccess: (state) => {
-      state.firstFetchDailyPlans = true;
+      state.needFirstFetchDailyPlans = false;
     },
     firstFetchFailed: (state) => {
-      state.firstFetchDailyPlans = false;
+      state.needFirstFetchDailyPlans = true;
     },
   },
 });

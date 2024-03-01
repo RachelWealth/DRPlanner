@@ -13,7 +13,7 @@ router.get("/:userID",verifyToken,getDailyPlans)
 router.delete("/:userID/:id",verifyToken,deleteDailyPlan)
 
 // //update a daily item
-router.put("/:id",verifyToken,updateDailyPlan)
+router.put("/:userID/:id",verifyToken,updateDailyPlan)
 
 
 
