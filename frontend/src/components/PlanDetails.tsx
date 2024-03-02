@@ -61,7 +61,7 @@ const PlanDetails = ({
     <div className=" w-full h-full items-center p-5">
       <div
         id="content"
-        className="flex w-full h-20 border-2 justify-start  items-center m-2"
+        className="flex w-full h-20 justify-start  items-center m-2 details-card"
       >
         <input
           className="flex w-full bg-transparent h-full rounded-lg font-mono text-3xl"
@@ -78,7 +78,7 @@ const PlanDetails = ({
 
       <div
         id="planType"
-        className="flex w-full h-15 border-2 justify-start  items-center m-2"
+        className="flex w-full h-15 border-2 justify-start  items-center m-2 details-card"
       >
         <h4 className="flex-none w-1/4 plan-details-title">Task Type</h4>
         <div className="flex-grow">
@@ -105,7 +105,7 @@ const PlanDetails = ({
 
       <div
         id="time"
-        className="flex w-full h-15 border-2 justify-start  items-center m-2"
+        className="flex w-full h-15 border-2 justify-start  items-center m-2 details-card"
       >
         <h4 className="flex-none w-1/4  plan-details-title"> Start Date</h4>
 
@@ -146,7 +146,7 @@ const PlanDetails = ({
 
       <div
         id="repeat"
-        className="flex w-full h-15 border-2 justify-start  items-center m-2"
+        className="details-card flex w-full h-15 border-2 justify-start  items-center m-2"
       >
         <h4 className="flex-none w-1/4 plan-details-title">Repeat Time</h4>
         <input
@@ -164,7 +164,7 @@ const PlanDetails = ({
 
       <div
         id="priority"
-        className="flex w-full h-15 border-2 justify-start  items-center m-2"
+        className=" details-card flex w-full h-15 border-2 justify-start  items-center m-2"
       >
         <h4 className="flex-none w-1/4  plan-details-title">Priority</h4>
         <select
@@ -189,13 +189,13 @@ const PlanDetails = ({
 
       <div
         id="comment"
-        className="flex w-full h-15 border-2 justify-start  items-center m-2"
+        className="details-card flex w-full h-15 border-2 justify-start  items-center m-2"
       >
         <h4 className="flex-none w-1/4  plan-details-title">Comments</h4>
         <textarea
           name=""
           id=""
-          value={choicedPlanDetails.comment}
+          defaultValue={choicedPlanDetails.comment}
           rows={5}
           className="w-full rounded-lg p-2"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -206,10 +206,10 @@ const PlanDetails = ({
           }}
         ></textarea>
       </div>
-      <div
+      {/* <div
         id="addFile"
-        className="flex w-full border-2 justify-start  items-center m-2"
-      ></div>
+        className="details-card flex w-full border-2 justify-start  items-center m-2"
+      ></div> */}
       <div className="justify-center h-15 flex  w-full items-baseline">
         <button
           className="bg-black text-white

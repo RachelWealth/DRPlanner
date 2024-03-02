@@ -44,3 +44,7 @@ color: var(--text-color);
   margin: 5pt;
   background-color: aquamarine;
 }
+
+.side-bar{
+  background-color: #474744;
+}

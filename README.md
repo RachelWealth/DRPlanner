@@ -1,5 +1,7 @@
 # DRPlanner
-> TO DO list app which can display the daily, monthly, yearly plan in one page and use praogress bar to demonstrate your progress 
+> A lightweight offline(temporarily) todo list
+> Ddisplay the daily, monthly, yearly plan in one page and use praogress bar to demonstrate your progress 
+
 
 ## Technique stack:
 ### Backend:
@@ -19,5 +21,11 @@
 ### Deployment:
 AWS: amplify, EC2
 
-## ToDo
-Sanity API 1:30:10
+## To Do List
+[] User access(Sanity)
+[] Complish function of monthly/yearly task
+[] Visualize progress
+[] report page
+[] sticky note
+[] ... 
+

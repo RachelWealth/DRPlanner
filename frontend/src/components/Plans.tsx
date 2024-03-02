@@ -17,13 +17,6 @@ const PlansDashBoard = () => {
     console.log("click div");
     setShowPlanDetails(value);
   };
-  // useEffect(() => {
-  //   if (showPlanDetails) {
-  //     setPlanDetail(true);
-  //   } else {
-  //     setPlanDetail(false);
-  //   }
-  // }, [choicedPlanDetails]);
   const handleGetPlanI = (plan: any) => {
 
     setPlanInfo(plan);
@@ -60,7 +53,7 @@ const PlansDashBoard = () => {
         unmountOnExit
       >
         <div
-          className={`absolute top-14 right-0 bg-green-200 w-1/2 h-[650px]    ${
+          className={`absolute top-14 right-0 bg-orange-300 rounded-lg w-1/2 h-[650px]    ${
             showPlanDetails
               ? "slide-enter-active slide-enter"
               : "slide-leave-active slide-leave-to"

@@ -35,3 +35,14 @@
     font-weight: bold;
     color: rgb(40,0,0);
   }
+
+  .details-card{
+    
+    padding: 5pt;
+    background-color:#f4f4f4;
+    border-radius:5pt;
+  }
+
+  .bg-orange{
+    background-color:  #ff5722; 
+  }
