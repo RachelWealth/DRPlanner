@@ -79,9 +79,10 @@ const DailyItem = ({ data, type }: Props) => {
         toast.error("Update failed!")
         return ;
       }
-      const newPlan =  {_id:data._id,newChange:{state:state[2]}}
-      const response = await axios.put(`${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/create/${curUser._id}/${data._id}`,
-      newPlan
+      const newChange = {state:state[2]}
+      const newPlan =  {_id:data._id,newChange:newChange}
+      const response = await axios.put(`${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}/${data._id}`,
+      newChange
     );
     dispatch(updateDailyPlanSuccess(newPlan))
     } catch (error) {
