@@ -26,7 +26,7 @@ const DailyPlanSchema = new mongoose.Schema({
         requird:true,
     },
     state:{
-        type:Number,
+        type:String,
         required:true, //0-not start 1-pending 2-finished
     },
 },

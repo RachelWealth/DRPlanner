@@ -3,15 +3,12 @@ import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addDailyStart,
-  addDailySuccess,
-  addDailyFailed,
   initialDaily,
   updateDailyPlanStart,
 } from "../redux/slices/dailySlice";
 import dotenv from "dotenv";
 dotenv.config();
-import { Toaster } from "react-hot-toast";
+import toast,{ Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
 import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
@@ -19,27 +16,23 @@ import "../styles/homepage.css";
 interface Props {
   className: String;
   checkClickItem: (value: boolean) => void;
-  getPlanInfo: (planInfo: any) => void;
+  getPlanInfo?: (planInfo: any) => void;
 }
 import nextConfig from "../../next.config.mjs";
 import { DateTime } from "luxon";
+import { state } from "../util/config";
 
-const DailyPlans = ({ className, checkClickItem, getPlanInfo }: Props) => {
+const DailyPlans = ({ className, checkClickItem }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
-
+  const { allDailyData } = useSelector((state: any) => state.daily);
+  
   const { curUser } = useSelector((state: any) => state.user);
-  const { allDailyData } = useSelector(
-    (state: any) => state.daily
-  );
-
+ 
   const { needFirstFetchDailyPlans } = useSelector((state: any) => state.user);
   const handleCheckClickItem = (id: String) => {
-    console.log(allDailyData);
     for (const plan in allDailyData) {
-      console.log(plan);
       if (allDailyData[plan]._id === id) {
-        //getPlanInfo(plan)
         return allDailyData[plan];
       }
     }
@@ -70,7 +63,7 @@ const DailyPlans = ({ className, checkClickItem, getPlanInfo }: Props) => {
         dispatch(firstFetchFailed());
       }
     }
-  }, [allDailyData,curUser]);
+  }, [curUser]);
 
   return (
     <div className={`${className}`}>
@@ -81,10 +74,9 @@ const DailyPlans = ({ className, checkClickItem, getPlanInfo }: Props) => {
             allDailyData
               .filter((plan) => {
                 const currentDate = DateTime.local();
-                const startDate =  DateTime.fromISO(plan.startDate);
                 const endDate =  DateTime.fromISO(plan.endDate);
-                // console.log(currentDate, startDate, endDate);
-                return currentDate >= startDate && currentDate <= endDate;
+
+                return currentDate <= endDate && plan.state!=state[2];
               })
               .map((plan: any) => (
                 <li

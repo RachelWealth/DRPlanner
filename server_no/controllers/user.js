@@ -39,7 +39,7 @@ export const getUser =async (req,res,next)=>{
 
 export const addDailyPlan = async (req, res, next) => {
     try {
-        console.log(req.params);
+        console.log("addDailyPlan",req.params);
         await User.findByIdAndUpdate(req.params.userID, {
             $push: { daily: req.params.id }
         });

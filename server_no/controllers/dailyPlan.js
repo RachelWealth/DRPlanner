@@ -6,12 +6,13 @@ import User from "../models/User.js";
 export const createDailyPlan = async (req, res, next) => {
   try {
     const dailyplan = new DailyPlan({ ...req.body });
+    await dailyplan.save();
     const planID = dailyplan._id;
     await axios.put(`http://localhost:8800/api/users/daily/${req.params.userID}/${planID}`, {
       userID: req.params.userID,
       id: planID,
     });
-    await dailyplan.save();
+    console.log("dailyplan",dailyplan)
     res.status(200).json("Daily plan created");
   } catch (error) {
     console.log(error)
@@ -49,8 +50,6 @@ export const updateDailyPlan = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  //if is compelete
 };
 
 export const deleteDailyPlan = async (req, res, next) => {

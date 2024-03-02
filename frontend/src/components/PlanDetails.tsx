@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/homepage.css";
+import { priority } from "../util/config";
 import {
   updateDailyPlanSuccess,
   updateDailyPlanFailed,
@@ -19,7 +20,7 @@ const PlanDetails = ({
   checkClickItem,
 }: PlanDetailsProps) => {
   const { choicedPlanDetails } = useSelector((State: any) => State.daily);
-
+  const { curUser } = useSelector((State: any) => State.user);
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
     choicedPlanDetails.startDate
   );
@@ -30,12 +31,14 @@ const PlanDetails = ({
   const [newChange, setNewChange] = useState({});
   const env = nextConfig.publicRuntimeConfig;
   const disptach = useDispatch();
-  const priority = ["None", "Low", "Medium", "High", "Urgent"];
   const handleClosePlanDetails = async (
     e: React.MouseEvent<HTMLButtonElement>,
     planInfo: any
   ): Promise<void> => {
     e.preventDefault();
+    if(Object.keys(newChange).length===0){
+      return;
+    }
     try {
       if (!env) {
         disptach(updateDailyPlanFailed());
@@ -43,10 +46,10 @@ const PlanDetails = ({
         return;
       }
       const res = await axios.put(
-        `${env.NEXT_PUBLIC_SERVER_HOST}/api/${planInfo._id}`,
-        { newChange }
+        `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}/${planInfo._id}`,
+      newChange 
       );
-      disptach(updateDailyPlanSuccess(res.data));
+      disptach(updateDailyPlanSuccess({_id:planInfo._id,newChange:newChange}));
     } catch (error) {
       console.log(error);
       disptach(updateDailyPlanFailed());
@@ -67,7 +70,7 @@ const PlanDetails = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
-              type: e.target.value,
+              content: e.target.value,
             }));
           }}
         />
@@ -82,12 +85,12 @@ const PlanDetails = ({
           <select
             name=""
             id=""
-            value={choicedPlanDetails.type}
+            defaultValue={choicedPlanDetails.type}
             className="flex rounded-lg"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setNewChange((newChange) => ({
-                ...newChange,
-                type: e.target.value,
+                // ...newChange,
+                // type: e.target.value,
               }));
             }}
           >
@@ -114,7 +117,7 @@ const PlanDetails = ({
               setSelectedStartDate(date);
               setNewChange((newChange) => ({
                 ...newChange,
-                type: date.toISOString(), // or whatever date format you want to use
+                startDate: date.toISOString(), // or whatever date format you want to use
               }));
             }
           }}
@@ -130,7 +133,7 @@ const PlanDetails = ({
               setSelectedEndDate(date);
               setNewChange((newChange) => ({
                 ...newChange,
-                type: date.toISOString(), // or whatever date format you want to use
+                endDate: date.toISOString(), // or whatever date format you want to use
               }));
             }
           }}
@@ -153,7 +156,7 @@ const PlanDetails = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
-              repeat: e.target.value,
+              repeatType: e.target.value,
             }));
           }}
         />
@@ -167,18 +170,18 @@ const PlanDetails = ({
         <select
           name=""
           id=""
-          value={choicedPlanDetails.priority}
+          defaultValue={choicedPlanDetails.priority}
           className=" flex rounded-lg"
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
-              type: e.target.value,
+              priority: e.target.value,
             }));
           }}
         >
-          {Object.entries(priority).map(([value, label]) => (
+          {priority.map((value) => (
             <option key={value} value={value}>
-              {label}
+              {value}
             </option>
           ))}
         </select>
@@ -198,7 +201,7 @@ const PlanDetails = ({
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
-              repeat: e.target.value,
+              comment: e.target.value,
             }));
           }}
         ></textarea>

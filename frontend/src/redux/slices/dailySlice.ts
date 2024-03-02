@@ -47,13 +47,16 @@ export const dailySlice = createSlice({
     },
     updateDailyPlanStart:(state,action)=>{
       state.choicedPlanDetails=action.payload
-      
       state.loading=true;
     },
     updateDailyPlanSuccess:(state,action)=>{
       state.loading=false;
       state.updated=true;
-      state.allDailyData.push(action.payload);
+      state.allDailyData = state.allDailyData.map((item) =>
+          item._id === action.payload._id ? { ...item, ...action.payload.newChange } : {...item}
+      )
+
+      //state.allDailyData.push(action.payload);
     },
     updateDailyPlanFailed:(state)=>{
       state.loading=false;
