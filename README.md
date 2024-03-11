@@ -1,6 +1,7 @@
 # DRPlanner
 > A lightweight offline(temporarily) todo list
-> Ddisplay the daily, monthly, yearly plan in one page and use praogress bar to demonstrate your progress 
+> Display the daily, monthly, yearly plan in one page
+>Use praogress bar to demonstrate your plan progress 
 
 
 ## Technique stack:
@@ -23,8 +24,8 @@ AWS: amplify, EC2
 
 ## To Do List
 [] User access(Sanity)
-[] Complish function of monthly/yearly task
-[] Visualize progress
+[x] Complish function of monthly/yearly task
+[x] Visualize progress
 [] report page
 [] sticky note
 [] ... 
