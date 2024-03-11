@@ -22,10 +22,15 @@
 ### Deployment:
 AWS: amplify, EC2
 
+## Preview
+
+![Homepage](image.png)
+![Plan Details](image-1.png)
+
 ## To Do List
-- [ ] User access(Sanity)
+- [ ] User access control(Sanity)
 - [x] Complish function of monthly/yearly task
-[x] Visualize progress
+- [x] Visualize progress
 - [ ] report page
 - [ ] sticky note
 - [ ] ... 
