@@ -1,5 +1,5 @@
 import express from "express";
-import {createDailyPlan,deleteDailyPlan,updateDailyPlan,getDailyPlans } from "../controllers/dailyPlan.js";
+import {createDailyPlan,deleteDailyPlan,updateDailyPlan,getDailyPlans ,get7DailyPlans} from "../controllers/dailyPlan.js";
 import { verifyToken } from "../verifyToken.js";
 
 const router = express.Router();
@@ -8,6 +8,8 @@ router.post("/create/:userID",verifyToken, createDailyPlan)
 
 // get all daily item
 router.get("/:userID",verifyToken,getDailyPlans)
+
+router.get("/7days/:userID",verifyToken,get7DailyPlans)
 
 // //delete a daily item
 router.delete("/:userID/:id",verifyToken,deleteDailyPlan)

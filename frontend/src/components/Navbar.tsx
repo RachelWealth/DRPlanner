@@ -37,7 +37,7 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Please input the key word"
-            className="flex-1 h-full  outline-none bg-transparent placeholder:text-gray-600"
+            className="flex-1 h-full  outline-none bg-transparent  placeholder:text-gray-600"
             onChange={(e) => setSearchQuery(e.target.value)}
             value={searchQuery}
           />

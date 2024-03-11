@@ -5,22 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   initialDaily,
   updateDailyPlanStart,
-} from "../redux/slices/dailySlice";
+} from "../../redux/slices/dailySlice";
 import dotenv from "dotenv";
 dotenv.config();
 import toast,{ Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
-import { firstFetchFailed, firstFetchSuccess } from "../redux/slices/userSlice";
-import "../styles/homepage.css";
+import { firstFetchFailed, firstFetchSuccess } from "../../redux/slices/userSlice";
+import "../../styles/homepage.css";
 interface Props {
   className: String;
   checkClickItem: (value: boolean) => void;
   getPlanInfo?: (planInfo: any) => void;
 }
-import nextConfig from "../../next.config.mjs";
+import nextConfig from "../../../next.config.mjs";
 import { DateTime } from "luxon";
-import { state } from "../util/config";
+import { state } from "../../util/config";
 
 const DailyPlans = ({ className, checkClickItem }: Props) => {
   const dispatch = useDispatch();

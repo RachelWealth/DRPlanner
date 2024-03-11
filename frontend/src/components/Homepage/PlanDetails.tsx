@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import "../styles/homepage.css";
-import { priority } from "../util/config";
+import "../../styles/homepage.css";
+import { priority } from "../../util/config";
 import {
   updateDailyPlanSuccess,
   updateDailyPlanFailed,
-} from "../redux/slices/dailySlice";
+} from "../../redux/slices/dailySlice";
 import { Toaster, toast } from "react-hot-toast";
 interface PlanDetailsProps {
   closePlanDetails: () => any;

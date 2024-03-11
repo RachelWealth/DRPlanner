@@ -2,23 +2,32 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addDailyStart,
-  updateDailyPlanFailed,
-  addDailySuccess,
-  updateDailyPlanSuccess,
-} from "../redux/slices/dailySlice";
+  addMonthlyYearlyStart,
+  updateMonthlyYearlyPlanFailed,
+  addMonthlyYearlySuccess,
+  updateMonthlyYearlyPlanSuccess,
+} from "../../redux/slices/monthlyYearlySlice";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { DateTime } from "luxon";
 import nextConfig from "@/next.config.mjs";
-import { priority, state } from "../util/config";
+import { priority, state } from "../../util/config";
+import ProgressBar from "./ProgressBar";
 interface Props {
   data?: any;
   type: string;
   onClickInsideCheckBox?: any;
+  itemType:String;
 }
-const DailyItem = ({ data, type }: Props) => {
- 
+import { proBarCalculate } from "../../util/proBarCaculate";
+const MonthlyYearlyItem = ({ data, type, itemType }: Props) => {
+  const initialDaily={
+    content: null,
+    priority: "Low",
+  }
+  if (!data) {
+    data = initialDaily
+  }
   const [newContent, setNewContent] = useState(data?.content || "");
   const [newPriority, setNewPriority] = useState(data?.priority || priority[0]);
   const { curUser } = useSelector((state: any) => state.user);
@@ -26,17 +35,15 @@ const DailyItem = ({ data, type }: Props) => {
   const env = nextConfig.publicRuntimeConfig;
   async function handleKeyDown(event: { key: string }): Promise<void> {
     if (event.key === "Enter") {
-      console.log(event.key);
       if (!curUser) {
         toast.error(`Please Login`);
         return;
       }
-      dispatch(addDailyStart());
+      dispatch(addMonthlyYearlyStart());
       const currentDate = DateTime.local();
       const formattedDate = currentDate.toFormat("yyyy-MM-dd");
       const oneDayLater = currentDate.plus({ days: 1 });
       const formattedoneDayLater = oneDayLater.toFormat("yyyy-MM-dd");
-     
 
       try {
         if (!env) {
@@ -52,15 +59,15 @@ const DailyItem = ({ data, type }: Props) => {
           state: state[1],
         };
         const response = await axios.post(
-          `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/create/${curUser._id}`,
+          `${env.NEXT_PUBLIC_SERVER_HOST}/api/${itemType.toLowerCase()}Plan/create/${curUser._id}`,
           newPlan
         );
-        dispatch(addDailySuccess(newPlan));
+        dispatch(addMonthlyYearlySuccess([itemType,newPlan]));
         setNewContent("");
         setNewPriority(priority[0]);
       } catch (error) {
         console.log(error);
-        dispatch(updateDailyPlanFailed());
+        dispatch(updateMonthlyYearlyPlanFailed());
       }
     }
   }
@@ -72,29 +79,33 @@ const DailyItem = ({ data, type }: Props) => {
   function handleChangePriority(event: ChangeEvent<HTMLSelectElement>): void {
     setNewPriority(event.target.value);
   }
-  async function handleClick():Promise<void>{
+  async function handleClick(): Promise<void> {
     try {
-      console.log("complete")
-      if(!env){
-        toast.error("Update failed!")
-        return ;
+      console.log("complete");
+      if (!env) {
+        toast.error("Update failed!");
+        return;
       }
-      const newChange = {state:state[2]}
-      const newPlan =  {_id:data._id,newChange:newChange}
-      const response = await axios.put(`${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}/${data._id}`,
-      newChange
-    );
-    dispatch(updateDailyPlanSuccess(newPlan))
+      const newChange = { state: state[2] };
+      const newPlan = { _id: data._id, newChange: newChange };
+      const response = await axios.put(
+        `${env.NEXT_PUBLIC_SERVER_HOST}/api/${itemType.toLowerCase()}Plan/${curUser._id}/${data._id}`,
+        newChange
+      );
+      dispatch(updateMonthlyYearlyPlanSuccess(newPlan));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   return (
     <div
-      className={`flex h-[50px] p-1 rounded-md border-gray-300 border-2 gap-2 justify-start items-center bg-white `}
-      // onClick={showPopup}
+       // onClick={showPopup}
     >
+      <div className={`flex h-[40px] p-1 rounded-md border-gray-300 border-1 gap-2 justify-start items-center bg-white `}
+      >
+
+     
       <div className="w-1/10 items-center">
         <input
           type="checkbox"
@@ -115,7 +126,7 @@ const DailyItem = ({ data, type }: Props) => {
       />
 
       <select
-        className="flex-2 h-full"
+        className="flex-2 h-full rounded-md p-1 w-1/3"
         disabled={type === "li"}
         value={newPriority}
         onChange={handleChangePriority}
@@ -126,7 +137,10 @@ const DailyItem = ({ data, type }: Props) => {
           </option>
         ))}
       </select>
-
+      </div>
+      {
+        type === "li"?<ProgressBar progress={proBarCalculate(data,itemType)}  />:null
+      }
       <Toaster
         position="bottom-center"
         toastOptions={{
@@ -148,4 +162,4 @@ const DailyItem = ({ data, type }: Props) => {
   );
 };
 
-export default DailyItem;
+export default MonthlyYearlyItem;

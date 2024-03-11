@@ -12,7 +12,6 @@ import Popup from "reactjs-popup";
 import {auth,provider} from "../firebase"
 import {signInWithPopup} from "firebase/auth"
 import nextConfig from "../../next.config.mjs";
-import { env } from "process";
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");

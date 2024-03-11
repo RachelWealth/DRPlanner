@@ -1,7 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import dailyReducer from "../slices/dailySlice";
-import monthlyReducer from "../slices/monthlySlice";
-import yearlyReducer from "../slices/yearlySlice";
+import monthlyYearlyReducer from "../slices/monthlyYearlySlice";
 import userReducer from "../slices/userSlice";
 import {
   persistStore,
@@ -14,15 +13,16 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const persistConfig = {
   key: "root",
-  storage,
+  version: 1,
+  storage: AsyncStorage,
 };
 
 const rootReducer = combineReducers({
   daily: dailyReducer,
-  monthly:monthlyReducer,
-  yearly:yearlyReducer,
+  monthlyYearly:monthlyYearlyReducer,
   user: userReducer,
 });
 
@@ -30,10 +30,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  // {
-  //   daily:dailyReducer,
-  //   user:userReducer,
-  // },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

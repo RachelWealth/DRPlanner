@@ -8,12 +8,15 @@ export const createYearlyPlan = async (req, res, next) => {
     const yearlyplan = new YearlyPlan({ ...req.body });
     await yearlyplan.save();
     const planID = yearlyplan._id;
-    await axios.put(`/api/users/yearly/${req.params.userID}/${planID}`, {
+    await axios.put(
+      `http://localhost:8800/api/users/yearly/${req.params.userID}/${planID}`, {
       userID: req.params.userID,
       id: planID,
     });
+    console.log("yearlyplan",yearlyplan)
     res.status(200).json("Yearly plan created");
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
@@ -48,8 +51,6 @@ export const updateYearlyPlan = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  //if is compelete
 };
 
 export const deleteYearlyPlan = async (req, res, next) => {

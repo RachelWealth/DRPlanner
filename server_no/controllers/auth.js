@@ -26,7 +26,6 @@ export const signin = async (req, res, next) => {
     if (!user) return next(createError(404, "User not exists"));
     const isCorrect = await bcrypt.compare(req.body.pw, user.pw);
     if (!isCorrect) return next(createError(404, "Password not correct"));
-    //res.status(200).send("User has been create!")
     const token = jwt.sign({ id: user._id }, process.env.JWT);
     const { pw, ...others } = user._doc;
 
@@ -50,7 +49,7 @@ export const googleAuth = async (req, res, next) => {
       const { pw, ...others } = user._doc;
       res
         .cookie("access_token", token, {
-          httpOnlp: true,
+          httpOnly: true,
         })
         .status(200)
         .json(others);

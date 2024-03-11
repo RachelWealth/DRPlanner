@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Typography,
@@ -19,6 +20,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const SidebarWithBurgerMenu = () => {
   const [open, setOpen] = React.useState(false);
@@ -64,6 +66,26 @@ const SidebarWithBurgerMenu = () => {
           </div>
           
           <List placeholder={undefined}>
+          <hr className="my-2 border-blue-gray-50" />
+            <Link href={"/"}>
+            <ListItem placeholder={undefined}>
+              <ListItemPrefix placeholder={undefined}>
+                <InboxIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              HomePage
+              <ListItemSuffix placeholder={undefined}>
+                <Chip
+                  value=""
+                  size="sm"
+                  variant="ghost"
+                  color="blue-gray"
+                  className="rounded-full"
+                />
+              </ListItemSuffix>
+            </ListItem>
+            </Link>
+            
+
             <Accordion
               open={open === true}
               icon={
@@ -101,12 +123,16 @@ const SidebarWithBurgerMenu = () => {
               {open && (
                 <AccordionBody className="py-1">
                   <List placeholder={undefined} className="p-0">
+                    <Link href={"/report/page"}>
                     <ListItem placeholder={undefined}>
                       <ListItemPrefix placeholder={undefined}>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
                       Analytics
                     </ListItem>
+                    </Link>
+                    
+
                     <ListItem placeholder={undefined}>
                       <ListItemPrefix placeholder={undefined}>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

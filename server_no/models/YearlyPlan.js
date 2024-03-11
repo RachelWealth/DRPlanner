@@ -1,20 +1,16 @@
 import mongoose from "mongoose";
 
 const YearlyPlanSchema = new mongoose.Schema({
-    id:{
-        type:Number,
-        required:true,
-        unique:true,
-    },
     repeatType:{
-        type:Number,
-        requird:true},
-    startDate:{
         type:Number,
         requird:true
     },
+    startDate:{
+        type:Date,
+        requird:true
+    },
     endDate:{
-        type:Number,
+        type:Date,
         requird:true
     },
     content:{
@@ -22,7 +18,7 @@ const YearlyPlanSchema = new mongoose.Schema({
         required:true,
     },
     comment:{
-        type:Number,
+        type:String,
         requird:true,
     },
     priority:{
@@ -36,5 +32,4 @@ const YearlyPlanSchema = new mongoose.Schema({
 },
 {timestamps: true});
 
-
-export default mongoose.model("yearlyPlan",YearlyPlanSchema);
+export default mongoose.model("YearlyPlan",YearlyPlanSchema);

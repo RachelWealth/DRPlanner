@@ -54,6 +54,40 @@ export const addDailyPlan = async (req, res, next) => {
     }
 };
 
+export const addMonthlyPlan = async (req, res, next) => {
+    try {
+        console.log("addMontlyPlan",req.params);
+        await User.findByIdAndUpdate(req.params.userID, {
+            $push: { monthly: req.params.id }
+        });
+
+        console.log("Added Montly item to user");
+        
+        res.status(200).json("New Montly item added");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: error.message });
+        // Use "error.message" to get the specific error message from the exception
+    }
+};
+
+export const addYearlyPlan = async (req, res, next) => {
+    try {
+        console.log("addYearlyPlan",req.params);
+        await User.findByIdAndUpdate(req.params.userID, {
+            $push: { yearly: req.params.id }
+        });
+
+        console.log("Added daily item to user");
+        
+        res.status(200).json("New daily item added");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: error.message });
+        // Use "error.message" to get the specific error message from the exception
+    }
+};
+
 
 
 export const deleteDailyPlan = async(req,res,next)=>{
