@@ -14,7 +14,7 @@ export const createMonthlyPlan = async (req, res, next) => {
       id: planID,
     });
     console.log("monthlyplan",monthlyplan)
-    res.status(200).json("Monthly plan created");
+    res.status(200).json(monthlyplan);
   } catch (error) {
     console.log(error)
     next(error);

@@ -8,16 +8,20 @@ import {
 } from "../../redux/slices/dailySlice";
 import dotenv from "dotenv";
 dotenv.config();
-import toast,{ Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import DailyItem from "./DailyItem";
-import { firstFetchFailed, firstFetchSuccess } from "../../redux/slices/userSlice";
+import {
+  firstFetchFailed,
+  firstFetchSuccess,
+} from "../../redux/slices/userSlice";
 import "../../styles/homepage.css";
 interface Props {
   className: String;
-  checkClickItem: (value: boolean) => void;
+  checkClickItem: (value: boolean, direction: string,plan:any) => void;
   getPlanInfo?: (planInfo: any) => void;
 }
+import { motion } from "framer-motion";
 import nextConfig from "../../../next.config.mjs";
 import { DateTime } from "luxon";
 import { state } from "../../util/config";
@@ -26,21 +30,14 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
   const { allDailyData } = useSelector((state: any) => state.daily);
-  
+
   const { curUser } = useSelector((state: any) => state.user);
- 
+
   const { needFirstFetchDailyPlans } = useSelector((state: any) => state.user);
-  const handleCheckClickItem = (id: String) => {
-    for (const plan in allDailyData) {
-      if (allDailyData[plan]._id === id) {
-        return allDailyData[plan];
-      }
-    }
-    //getPlanInfo(allDailyData.find(function(item:any) {return item._id === id}))
-  };
+
   const handleClickli = (plan: any) => {
-    dispatch(updateDailyPlanStart(handleCheckClickItem(plan._id)));
-    checkClickItem(true);
+    dispatch(updateDailyPlanStart());
+    checkClickItem(true, "right",["Daily",plan]);
   };
   useEffect(() => {
     if (needFirstFetchDailyPlans) {
@@ -58,9 +55,11 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
           }
         };
         fetchPlans();
+        toast.success("succeed")
       } catch (error) {
         console.log(error);
         dispatch(firstFetchFailed());
+        toast.error("failed")
       }
     }
   }, [curUser]);
@@ -74,18 +73,22 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
             allDailyData
               .filter((plan) => {
                 const currentDate = DateTime.local();
-                const endDate =  DateTime.fromISO(plan.endDate);
-
-                return currentDate <= endDate && plan.state!=state[2];
+                const endDate = DateTime.fromISO(plan.endDate);
+                //return currentDate <= endDate && plan.state != state[2];
+                return currentDate <= endDate;
               })
               .map((plan: any) => (
-                <li
+                <motion.li
+                  initial={{ opacity: 0, y: "100%" }}
+                  exit={{ opacity: 0, y: "100%" }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                   onClick={() => handleClickli(plan)}
                   key={plan._id}
-                  className="hover:bg-gray-200 bg-white p-4 mb-2 rounded-md shadow-md"
+                  className="hover:bg-gray-200 bg-white p-2 mb-2 rounded-md shadow-md"
                 >
                   <DailyItem data={plan} type="li" />
-                </li>
+                </motion.li>
               ))}
         </ul>
 

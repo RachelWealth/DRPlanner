@@ -53,7 +53,7 @@ const DailyItem = ({ data, type }: Props) => {
           `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/create/${curUser._id}`,
           newPlan
         );
-        dispatch(addDailySuccess(newPlan));
+        dispatch(addDailySuccess(response.data));
         setNewContent("");
         setNewPriority(priority[0]);
       } catch (error) {

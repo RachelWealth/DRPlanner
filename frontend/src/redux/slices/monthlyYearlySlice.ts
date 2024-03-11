@@ -8,7 +8,6 @@ interface MonthlyYearlyState {
   error: boolean,
   updated:boolean,
   firstFetchMonthlyYearlyPlans:boolean,
-  choicedPlanDetails:any,
 }
 const initialState: MonthlyYearlyState = {
   newMonthlyYearlyPlan: {},
@@ -18,7 +17,6 @@ const initialState: MonthlyYearlyState = {
   allYearlyData: [],
   allMonthlyData: [],
   firstFetchMonthlyYearlyPlans: true,
-  choicedPlanDetails:{}
 };
 
 export const monthlyYearlySlice = createSlice({
@@ -34,6 +32,7 @@ export const monthlyYearlySlice = createSlice({
       }
     },
     addMonthlyYearlyStart: (state) => {
+      
       state.loading = true;
     },
     addMonthlyYearlySuccess: (state, action) => {
@@ -54,8 +53,7 @@ export const monthlyYearlySlice = createSlice({
     updateToServerFailed: (state) => {
       state.updated = false;
     },
-    updateMonthlyYearlyPlanStart:(state,action)=>{
-      state.choicedPlanDetails=action.payload
+    updateMonthlyYearlyPlanStart:(state)=>{
       state.loading=true;
     },
     updateMonthlyYearlyPlanSuccess:(state,action)=>{

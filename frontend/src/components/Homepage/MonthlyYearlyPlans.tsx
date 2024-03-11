@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Container from "./../Homepage/Container";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  initialMonthlyYearly,
+  initialMonthlyYearly,updateMonthlyYearlyPlanStart,
 } from "../../redux/slices/monthlyYearlySlice";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -14,9 +14,10 @@ import { firstFetchFailed, firstFetchSuccess } from "../../redux/slices/userSlic
 import { DateTime } from "luxon";
 interface Props {
   className: String;
-  checkClickItem:(value:boolean)=>void;
+  checkClickItem:(value:boolean, direction:string,plan:any)=>void;
   itemType:String;
 }
+import { motion } from "framer-motion";
 import { state } from "../../util/config";
 
 const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
@@ -33,9 +34,13 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
      const { allYearlyData } = useSelector((state: any) => state.monthlyYearly);
      allMY = allYearlyData
   }
+
+ const handleClickli = (plan: any)=> {
+  dispatch(updateMonthlyYearlyPlanStart());
   
-  //const { firstFetchMonthlyYearlyPlans } = useSelector((state: any) => state.user);
-  
+  checkClickItem(true,"left",[itemType,plan]);
+}
+
   useEffect(() => {
       const env = nextConfig.publicRuntimeConfig
       try {
@@ -58,10 +63,8 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
         dispatch(firstFetchFailed());
       }
   }, []);
-
-  function handleClickli(plan: any): void {
-    throw new Error("Function not implemented.");
-  }
+  
+ 
 
   return (
     <div className={`${className}`}>
@@ -75,16 +78,21 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
                 const currentDate = DateTime.local();
                 const endDate =  DateTime.fromISO(plan.endDate);
 
-                return currentDate <= endDate && plan.state!=state[2];
+                //return currentDate <= endDate && plan.state!=state[2];
+                return currentDate <= endDate ;
               })
               .map((plan: any) => (
-                <li
+                <motion.li
+                  initial={{ opacity: 0, y: "100%" }}
+                  exit={{ opacity: 0, y: "100%" }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                   onClick={() => handleClickli(plan)}
                   key={plan._id}
-                  className="hover:bg-gray-200 bg-white p-4 mb-2 rounded-md shadow-md"
+                  className="hover:bg-gray-200 bg-white p-2 mb-2 rounded-md shadow-md"
                 >
                   <MonthYearlyItem data={plan} type="li" itemType={itemType} />
-                </li>
+                </motion.li>
               ))}
         </ul>
 
@@ -115,3 +123,5 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
 };
 
 export default MonthlyYearlyPlans;
+
+

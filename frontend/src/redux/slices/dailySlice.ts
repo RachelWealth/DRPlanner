@@ -7,7 +7,6 @@ interface DailyState {
   error: boolean,
   updated:boolean,
   firstFetchDailyPlans:boolean,
-  choicedPlanDetails:any,
 }
 const initialState: DailyState = {
   newDailyPlan: {},
@@ -16,7 +15,6 @@ const initialState: DailyState = {
   updated: false,
   allDailyData: [],
   firstFetchDailyPlans: true,
-  choicedPlanDetails:{}
 };
 
 export const dailySlice = createSlice({
@@ -45,8 +43,7 @@ export const dailySlice = createSlice({
     updateToServerFailed: (state) => {
       state.updated = false;
     },
-    updateDailyPlanStart:(state,action)=>{
-      state.choicedPlanDetails=action.payload
+    updateDailyPlanStart:(state)=>{
       state.loading=true;
     },
     updateDailyPlanSuccess:(state,action)=>{
@@ -56,7 +53,7 @@ export const dailySlice = createSlice({
           item._id === action.payload._id ? { ...item, ...action.payload.newChange } : {...item}
       )
 
-      //state.allDailyData.push(action.payload);
+      state.allDailyData.push(action.payload);
     },
     updateDailyPlanFailed:(state)=>{
       state.loading=false;

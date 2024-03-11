@@ -14,7 +14,7 @@ export const createYearlyPlan = async (req, res, next) => {
       id: planID,
     });
     console.log("yearlyplan",yearlyplan)
-    res.status(200).json("Yearly plan created");
+    res.status(200).json(yearlyplan);
   } catch (error) {
     console.log(error)
     next(error);

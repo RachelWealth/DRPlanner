@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/homepage.css";
-import { priority } from "../../util/config";
+import { priority,planTypes } from "../../util/config";
 import {
   updateDailyPlanSuccess,
   updateDailyPlanFailed,
@@ -13,21 +13,21 @@ import {
 import { Toaster, toast } from "react-hot-toast";
 interface PlanDetailsProps {
   closePlanDetails: () => any;
-  checkClickItem: (value: boolean) => void;
+  checkClickItem: (value: boolean, direction:string) => void;
+  choicedPlanDetails:any;
 }
 const PlanDetails = ({
   closePlanDetails,
-  checkClickItem,
+  choicedPlanDetails,
 }: PlanDetailsProps) => {
-  const { choicedPlanDetails } = useSelector((State: any) => State.daily);
   const { curUser } = useSelector((State: any) => State.user);
+  const [planType,plan] = choicedPlanDetails
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
-    choicedPlanDetails.startDate
+    plan.startDate
   );
   const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(
-    choicedPlanDetails.endDate
+    plan.endDate
   );
-
   const [newChange, setNewChange] = useState({});
   const env = nextConfig.publicRuntimeConfig;
   const disptach = useDispatch();
@@ -66,7 +66,7 @@ const PlanDetails = ({
         <input
           className="flex w-full bg-transparent h-full rounded-lg font-mono text-3xl"
           type="text"
-          value={choicedPlanDetails.content}
+          value={plan.content}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
@@ -85,8 +85,9 @@ const PlanDetails = ({
           <select
             name=""
             id=""
-            defaultValue={choicedPlanDetails.type}
+            defaultValue={planType}
             className="flex rounded-lg"
+            disabled={true}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setNewChange((newChange) => ({
                 // ...newChange,
@@ -94,12 +95,10 @@ const PlanDetails = ({
               }));
             }}
           >
-            <option value="daily">Daily</option>
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
-            <option value="complete">Complete</option>
-            <option value="brainstorm">Brainstorm</option>
-          </select>
+            {planTypes.map((type:string)=>(
+              <option value={type}>{type}</option>
+            ))}
+           </select>
         </div>
       </div>
 
@@ -152,7 +151,7 @@ const PlanDetails = ({
         <input
           type="text"
           className="flex rounded-lg w-[50px] pl-2"
-          value={choicedPlanDetails.repeatType}
+          value={plan.repeatType}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setNewChange((newChange) => ({
               ...newChange,
@@ -170,7 +169,7 @@ const PlanDetails = ({
         <select
           name=""
           id=""
-          defaultValue={choicedPlanDetails.priority}
+          defaultValue={plan.priority}
           className=" flex rounded-lg"
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             setNewChange((newChange) => ({
@@ -195,7 +194,7 @@ const PlanDetails = ({
         <textarea
           name=""
           id=""
-          defaultValue={choicedPlanDetails.comment}
+          defaultValue={plan.comment}
           rows={5}
           className="w-full rounded-lg p-2"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -216,8 +215,7 @@ const PlanDetails = ({
       border-gary-400 items-center justify-center hover:bg-gray-200 text-sm py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
           onClick={(e) => {
-            handleClosePlanDetails(e, choicedPlanDetails);
-            checkClickItem(false);
+            handleClosePlanDetails(e, plan);
           }}
         >
           Save

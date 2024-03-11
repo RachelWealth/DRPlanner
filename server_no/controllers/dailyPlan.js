@@ -16,7 +16,7 @@ export const createDailyPlan = async (req, res, next) => {
       }
     );
     console.log("dailyplan", dailyplan);
-    res.status(200).json("Daily plan created");
+    res.status(200).json(dailyplan);
   } catch (error) {
     console.log(error);
     next(error);
