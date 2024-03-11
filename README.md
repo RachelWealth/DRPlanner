@@ -1,7 +1,9 @@
 # DRPlanner
 > A lightweight offline(temporarily) todo list
+
 > Display the daily, monthly, yearly plan in one page
->Use praogress bar to demonstrate your plan progress 
+
+> Use praogress bar to demonstrate your plan progress 
 
 
 ## Technique stack:
