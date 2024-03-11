@@ -23,10 +23,10 @@
 AWS: amplify, EC2
 
 ## To Do List
-[] User access(Sanity)
-[x] Complish function of monthly/yearly task
+- [ ] User access(Sanity)
+- [x] Complish function of monthly/yearly task
 [x] Visualize progress
-[] report page
-[] sticky note
-[] ... 
+- [ ] report page
+- [ ] sticky note
+- [ ] ... 
 
