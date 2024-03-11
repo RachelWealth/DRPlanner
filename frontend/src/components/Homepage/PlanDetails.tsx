@@ -5,23 +5,24 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/homepage.css";
-import { priority,planTypes } from "../../util/config";
+import { priority, planTypes } from "../../util/config";
 import {
   updateDailyPlanSuccess,
   updateDailyPlanFailed,
 } from "../../redux/slices/dailySlice";
+import { updateMonthlyYearlyPlanSuccess } from "@/src/redux/slices/monthlyYearlySlice";
 import { Toaster, toast } from "react-hot-toast";
 interface PlanDetailsProps {
   closePlanDetails: () => any;
-  checkClickItem: (value: boolean, direction:string) => void;
-  choicedPlanDetails:any;
+  checkClickItem: (value: boolean, direction: string) => void;
+  choicedPlanDetails: any;
 }
 const PlanDetails = ({
   closePlanDetails,
   choicedPlanDetails,
 }: PlanDetailsProps) => {
   const { curUser } = useSelector((State: any) => State.user);
-  const [planType,plan] = choicedPlanDetails
+  const [planType, plan] = choicedPlanDetails;
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
     plan.startDate
   );
@@ -36,7 +37,7 @@ const PlanDetails = ({
     planInfo: any
   ): Promise<void> => {
     e.preventDefault();
-    if(Object.keys(newChange).length===0){
+    if (Object.keys(newChange).length === 0) {
       return;
     }
     try {
@@ -46,10 +47,23 @@ const PlanDetails = ({
         return;
       }
       const res = await axios.put(
-        `${env.NEXT_PUBLIC_SERVER_HOST}/api/dailyPlan/${curUser._id}/${planInfo._id}`,
-      newChange 
+        `${env.NEXT_PUBLIC_SERVER_HOST}/api/${planType.toLowerCase()}Plan/${
+          curUser._id
+        }/${planInfo._id}`,
+        newChange
       );
-      disptach(updateDailyPlanSuccess({_id:planInfo._id,newChange:newChange}));
+      if (planType === "Daily") {
+        disptach(
+          updateDailyPlanSuccess({ _id: planInfo._id, newChange: newChange })
+        );
+      } else {
+        disptach(
+          updateMonthlyYearlyPlanSuccess([
+            planType,
+            { _id: planInfo._id, newChange: newChange },
+          ])
+        );
+      }
     } catch (error) {
       console.log(error);
       disptach(updateDailyPlanFailed());
@@ -95,10 +109,10 @@ const PlanDetails = ({
               }));
             }}
           >
-            {planTypes.map((type:string)=>(
+            {planTypes.map((type: string) => (
               <option value={type}>{type}</option>
             ))}
-           </select>
+          </select>
         </div>
       </div>
 

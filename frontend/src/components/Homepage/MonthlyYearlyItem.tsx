@@ -89,13 +89,15 @@ const MonthlyYearlyItem = ({ data, type, itemType }: Props) => {
         return;
       }
       const newChange = { state: state[2] };
+      const newPlan = { _id: data._id, newChange: newChange };
+      
       const response = await axios.put(
         `${env.NEXT_PUBLIC_SERVER_HOST}/api/${itemType.toLowerCase()}Plan/${
           curUser._id
         }/${data._id}`,
         newChange
       );
-      dispatch(updateMonthlyYearlyPlanSuccess(response.data));
+      dispatch(updateMonthlyYearlyPlanSuccess(newPlan));
     } catch (error) {
       console.log(error);
     }
