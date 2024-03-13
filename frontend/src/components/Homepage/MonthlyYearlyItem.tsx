@@ -20,6 +20,7 @@ interface Props {
   itemType: String;
 }
 import { proBarCalculate } from "../../util/proBarCaculate";
+
 const MonthlyYearlyItem = ({ data, type, itemType }: Props) => {
   const initialDaily = {
     content: null,
@@ -97,12 +98,12 @@ const MonthlyYearlyItem = ({ data, type, itemType }: Props) => {
         }/${data._id}`,
         newChange
       );
-      dispatch(updateMonthlyYearlyPlanSuccess(newPlan));
+      dispatch(updateMonthlyYearlyPlanSuccess([itemType,newPlan]));
     } catch (error) {
       console.log(error);
     }
   }
-
+  if (typeof window !== "undefined") {
   return (
     <div>
       <div
@@ -162,6 +163,6 @@ const MonthlyYearlyItem = ({ data, type, itemType }: Props) => {
       />
     </div>
   );
-};
+};}
 
 export default MonthlyYearlyItem;

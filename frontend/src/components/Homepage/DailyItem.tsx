@@ -88,7 +88,7 @@ const DailyItem = ({ data, type }: Props) => {
       console.log(error);
     }
   }
-
+  if (typeof window !== "undefined") {
   return (
     <div
       className={`flex h-[50px] p-1 rounded-md border-gray-300 border-1 gap-2 justify-start items-center bg-white `}
@@ -145,6 +145,6 @@ const DailyItem = ({ data, type }: Props) => {
       />
     </div>
   );
-};
+};}
 
 export default DailyItem;

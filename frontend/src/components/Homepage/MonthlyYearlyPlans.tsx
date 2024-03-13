@@ -26,14 +26,9 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
  
   const { curUser } = useSelector((state: any) => state.user);
   let allMY:any=[]
-  if(itemType==="Monthly"){
-    const { allMonthlyData } = useSelector((state: any) => state.monthlyYearly);
-     allMY = allMonthlyData
-  }
-  else{
-     const { allYearlyData } = useSelector((state: any) => state.monthlyYearly);
-     allMY = allYearlyData
-  }
+  const { allMonthlyData, allYearlyData } = useSelector((state: any) => state.monthlyYearly);
+
+  allMY = (itemType === "Monthly") ? allMonthlyData : allYearlyData;
 
  const handleClickli = (plan: any)=> {
   dispatch(updateMonthlyYearlyPlanStart());
@@ -52,6 +47,7 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
             const res = await axios.get(
               `${env.NEXT_PUBLIC_SERVER_HOST}/api/${itemType.toLowerCase()}Plan/${curUser._id}`
             );
+            
             console.log(res);
             dispatch(firstFetchSuccess());
             dispatch(initialMonthlyYearly([itemType,res.data]));
@@ -65,7 +61,7 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
   }, []);
   
  
-
+  if (typeof window !== "undefined") {
   return (
     <div className={`${className}`}>
       <h3 className="font-bold">{itemType}</h3>
@@ -120,7 +116,7 @@ const MonthlyYearlyPlans = ({ className,checkClickItem, itemType }: Props) => {
       />
     </div>
   );
-};
+};}
 
 export default MonthlyYearlyPlans;
 

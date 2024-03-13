@@ -4,8 +4,8 @@ import DailyPlans from "./DailyPlans";
 import MonthlyYearlyPlans from "./MonthlyYearlyPlans";
 import PlanDetails from "./PlanDetails";
 import "../../styles/homepage.css";
-import { CSSTransition } from "react-transition-group";
 import { motion, AnimatePresence } from "framer-motion";
+
 const PlansDashBoard = () => {
   const [showPlanDetails, setShowPlanDetails] = useState(false);
   const [slideInDirection, setSlideInDirection] = useState("right");
@@ -45,6 +45,7 @@ const PlansDashBoard = () => {
       document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, [showPlanDetails]);
+  if (typeof window !== "undefined") {
   return (
     <div className="flex h-full justify-center items-center">
       <div className="p-2 flex items-center bg-green-100 justify-center h-[650px] w-[800px] rounded-lg">
@@ -53,7 +54,6 @@ const PlansDashBoard = () => {
           checkClickItem={(value: boolean, direction: string, plan: any) =>
             handleCheckClickItem(value, direction, plan)
           }
-          //getPlanInfo={(id: string) => handleGetPlanI(id)}
         />
         <div className="flex-1 m-1 h-full justify-center items-center ">
           <MonthlyYearlyPlans
@@ -70,11 +70,9 @@ const PlansDashBoard = () => {
               handleCheckClickItem(value, direction, plan)
             }
             itemType={"Yearly"}
-            // getPlanInfo={(id: string) => handleGetPlanI(id)}
-          />
+            />
         </div>
       </div>
-      {/* {showPlanDetails && ( */}
       <AnimatePresence>
         {showPlanDetails && (
           <motion.div
@@ -105,9 +103,8 @@ const PlansDashBoard = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* )} */}
     </div>
   );
-};
+};}
 
 export default PlansDashBoard;

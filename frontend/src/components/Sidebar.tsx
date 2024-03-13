@@ -21,6 +21,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from "next/image";
 
 const SidebarWithBurgerMenu = () => {
   const [open, setOpen] = React.useState(false);
@@ -32,6 +33,7 @@ const SidebarWithBurgerMenu = () => {
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
+  if (typeof window !== "undefined") {
   return (
     <div id="sidebar" className="h-full">
       <div className="m-2.5">
@@ -55,7 +57,7 @@ const SidebarWithBurgerMenu = () => {
           placeholder={"Card"}
         >
           <div className="mb-2 flex items-center gap-4 p-4">
-            <img
+            <Image
               src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
               alt="brand"
               className="h-8 w-8"
@@ -171,5 +173,5 @@ const SidebarWithBurgerMenu = () => {
       </Drawer>
     </div>
   );
-};
+};}
 export default SidebarWithBurgerMenu;

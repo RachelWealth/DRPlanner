@@ -5,6 +5,7 @@ import { store, persistor } from "../redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  if (typeof window !== "undefined") {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -12,6 +13,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </PersistGate>
     </Provider>
   );
-};
+};}
 
 export default Layout;

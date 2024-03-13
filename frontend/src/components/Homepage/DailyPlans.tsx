@@ -33,14 +33,13 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
 
   const { curUser } = useSelector((state: any) => state.user);
 
-  const { needFirstFetchDailyPlans } = useSelector((state: any) => state.user);
+  //const { needFirstFetchDailyPlans } = useSelector((state: any) => state.user);
 
   const handleClickli = (plan: any) => {
     dispatch(updateDailyPlanStart());
     checkClickItem(true, "right",["Daily",plan]);
   };
   useEffect(() => {
-    if (needFirstFetchDailyPlans) {
       try {
         const env = nextConfig.publicRuntimeConfig;
         const fetchPlans = async () => {
@@ -55,15 +54,13 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
           }
         };
         fetchPlans();
-        toast.success("succeed")
       } catch (error) {
         console.log(error);
         dispatch(firstFetchFailed());
         toast.error("failed")
       }
-    }
-  }, [curUser]);
-
+  }, []);
+  if (typeof window !== "undefined") {
   return (
     <div className={`${className}`}>
       <h3 className="font-bold">Daily</h3>
@@ -119,6 +116,6 @@ const DailyPlans = ({ className, checkClickItem }: Props) => {
       />
     </div>
   );
-};
+};}
 
 export default DailyPlans;

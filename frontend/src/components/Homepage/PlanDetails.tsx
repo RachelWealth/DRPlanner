@@ -1,3 +1,4 @@
+"use client";
 import nextConfig from "@/next.config.mjs";
 import axios from "axios";
 import React, { useState } from "react";
@@ -70,7 +71,7 @@ const PlanDetails = ({
     }
     closePlanDetails();
   };
-
+  if (typeof window !== "undefined") {
   return (
     <div className=" w-full h-full items-center p-5">
       <div
@@ -110,7 +111,7 @@ const PlanDetails = ({
             }}
           >
             {planTypes.map((type: string) => (
-              <option value={type}>{type}</option>
+              <option key={type} value={type}>{type}</option>
             ))}
           </select>
         </div>
@@ -219,10 +220,7 @@ const PlanDetails = ({
           }}
         ></textarea>
       </div>
-      {/* <div
-        id="addFile"
-        className="details-card flex w-full border-2 justify-start  items-center m-2"
-      ></div> */}
+      
       <div className="justify-center h-15 flex  w-full items-baseline">
         <button
           className="bg-black text-white
@@ -256,5 +254,5 @@ const PlanDetails = ({
     </div>
   );
 };
-
+}
 export default PlanDetails;

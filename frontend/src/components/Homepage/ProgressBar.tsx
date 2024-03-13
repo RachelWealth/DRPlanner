@@ -9,7 +9,7 @@ const ProgressBar=({progress}:Props)=> {
   const progressBarStyle: React.CSSProperties = {
     width: `${progress}%`,
   };
-
+  if (typeof window !== "undefined") {
   return (
     <div className="flex bg-gray-600 h-2 rounded-full dark:bg-gray-300 w-full"
     >
@@ -21,5 +21,5 @@ const ProgressBar=({progress}:Props)=> {
     </div>
      );
 };
-
+}
 export default ProgressBar;

@@ -15,6 +15,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const {curUser} = useSelector((state: any) =>state.user)
+  if (typeof window !== "undefined") {
   return (
     <div className="w-full h-12 bg-white border-b-[1px] border-b-gray-400">
       <nav
@@ -97,6 +98,6 @@ const Navbar = () => {
       </nav>
     </div>
   );
-};
+};}
 
 export default Navbar;

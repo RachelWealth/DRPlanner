@@ -23,7 +23,7 @@ export const monthlyYearlySlice = createSlice({
   name: "monthlyYearly",
   initialState,
   reducers: {
-    initialMonthlyYearly:(state,action:any)=>{
+    initialMonthlyYearly:(state,action)=>{
       console.log(action.payload[0],action.payload[1])
       if(action.payload[0]==="Monthly"){
         state.allMonthlyData=action.payload[1]

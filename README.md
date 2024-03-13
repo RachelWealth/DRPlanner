@@ -1,8 +1,6 @@
 # DRPlanner
 > A lightweight offline(temporarily) todo list
-
 > Display the daily, monthly, yearly plan in one page
-
 > Use praogress bar to demonstrate your plan progress 
 
 
@@ -28,8 +26,10 @@ AWS: amplify, EC2
 
 ![Homepage](image.png)
 ![Plan Details](image-1.png)
+![Sanity](image-2.png)
 
 ## To Do List
+- [ ] Transfer backend into microservices structure
 - [ ] User access control(Sanity)
 - [x] Complish function of monthly/yearly task
 - [x] Visualize progress

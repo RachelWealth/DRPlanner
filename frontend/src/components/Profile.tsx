@@ -1,4 +1,4 @@
-// components/ProfileDropdown.tsx
+"use client"
 import React from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -9,11 +9,9 @@ const ProfileDropdown: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    console.log("click logout")
     dispatch(logout());
   };
   const handlChangeAccount = (data: any) => {
-    console.log("handlChangeAccount pending...")
     dispatch(changeAccount(data));
   };
   return (
@@ -40,7 +38,6 @@ const ProfileDropdown: React.FC = () => {
         >
           Logout
         </p>
-        {/* Add other links/options as needed */}
       </div>
     </Popup>
   );

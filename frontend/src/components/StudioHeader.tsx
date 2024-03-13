@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoReturnDownBack } from "react-icons/io5";
 const StudioHeader = (props: any) => {
+  if (typeof window !== "undefined") {
   return (
     <div>
       <div className="p-5 bg-black h-12 text-white flex items-center justify-between gap-2">
@@ -15,6 +16,6 @@ const StudioHeader = (props: any) => {
       {props.renderDefault(props)}
     </div>
   );
-};
+};}
 
 export default StudioHeader;
